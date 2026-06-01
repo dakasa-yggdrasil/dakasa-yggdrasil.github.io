@@ -100,8 +100,8 @@ code, pre { font-family: var(--font-mono); }
 .hero { position: relative; padding: 96px 0 84px; overflow: hidden; }
 .hero__canvas {
   position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;
-  -webkit-mask-image: radial-gradient(125% 105% at 50% 64%, #000 52%, transparent 100%);
-  mask-image: radial-gradient(125% 105% at 50% 64%, #000 52%, transparent 100%);
+  -webkit-mask-image: radial-gradient(145% 118% at 50% 66%, #000 50%, transparent 100%);
+  mask-image: radial-gradient(145% 118% at 50% 66%, #000 50%, transparent 100%);
 }
 .hero__inner::before {
   content: ""; position: absolute; z-index: -1; left: 50%; top: 44%; transform: translate(-50%, -50%);
