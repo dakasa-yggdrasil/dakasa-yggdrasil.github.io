@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Yggdrasil favicon — stylised "Y" + paper-grain dot trio.
+     Single-colour via currentColor so the browser tints it per
+     theme-color meta. Brand-aligned: clay teal default, but degrades
+     gracefully on any background. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+  <rect x="2" y="2" width="20" height="20" rx="5" fill="#0b0d0e" />
+  <!-- The Y — three converging strokes -->
+  <path d="M8 7l4 5v5" stroke="#4fd1c5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M16 7l-4 5" stroke="#4fd1c5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Paper-grain dot trio (the "casa" texture motif) -->
+  <circle cx="6" cy="18" r="0.7" fill="#4fd1c5" opacity="0.6"/>
+  <circle cx="9" cy="18" r="0.7" fill="#4fd1c5" opacity="0.4"/>
+  <circle cx="12" cy="18" r="0.7" fill="#4fd1c5" opacity="0.25"/>
+</svg>
