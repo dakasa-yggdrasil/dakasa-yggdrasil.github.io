@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Identidade &amp; colaboradores · Conceitos · Yggdrasil</title>
-<meta name="description" content="O modelo de identidade embutido do Yggdrasil: collaborators, teams e team_grants; sessão e MFA (TOTP/recovery), CSRF nas escritas, provedores OAuth/OIDC e o ciclo de vida do colaborador pela CLI." />
+<title>Identity &amp; collaborators · Docs · Yggdrasil</title>
+<meta name="description" content="Yggdrasil's built-in identity model: collaborators, teams and team grants; session and MFA (TOTP/recovery), CSRF on writes, OAuth/OIDC providers and the collaborator lifecycle through the CLI." />
 <link rel="icon" href="../assets/favicon-tree.png" type="image/png" />
 <meta name="theme-color" content="#0A0E0F" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="Identidade &amp; colaboradores · Yggdrasil" />
-<meta property="og:description" content="Identidade e workforce embutidos no Yggdrasil — colaboradores, times e grants — para o time interno de plataforma." />
+<meta property="og:title" content="Identity &amp; collaborators · Yggdrasil" />
+<meta property="og:description" content="Identity and workforce built into Yggdrasil — collaborators, teams and grants — for your internal platform team." />
 <meta property="og:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,25 +22,25 @@
 <!-- ░░ NAV ░░ -->
 <header class="nav is-scrolled" id="nav">
   <div class="wrap nav__inner">
-    <a class="brand" href="../" aria-label="Yggdrasil — início">
+    <a class="brand" href="../" aria-label="Yggdrasil — home">
       <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
       <span class="brand__name">Yggdrasil</span>
     </a>
-    <nav class="nav__links" aria-label="Principal">
-      <a href="../">Início</a>
-      <a href="../#integrations">Integrações</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="../">Home</a>
+      <a href="../#integrations">Integrations</a>
       <a href="../#surfaces">Surfaces</a>
       <a href="../#cli">CLI</a>
-      <a href="index.html" aria-current="page">Conceitos</a>
+      <a href="index.html" aria-current="page">Docs</a>
     </nav>
     <div class="nav__cta">
-      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub da organização">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub organization">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <a class="btn btn--solid btn--sm" href="../#start">Começar</a>
+      <a class="btn btn--solid btn--sm" href="../#start">Get started</a>
     </div>
-    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -50,57 +50,57 @@
 
   <!-- ░░ SIDEBAR ░░ -->
   <aside class="doc-side" id="docSide">
-    <button class="doc-side__toggle" aria-expanded="false">Identidade</button>
+    <button class="doc-side__toggle" aria-expanded="false">Identity</button>
     <div class="doc-side__nav">
       <div class="doc-side__inner">
-        <p class="doc-side__group">Fundamentos</p>
-        <a href="index.html">Visão geral &amp; arquitetura</a>
-        <a href="manifests.html">Manifestos</a>
+        <p class="doc-side__group">Fundamentals</p>
+        <a href="index.html">Overview &amp; architecture</a>
+        <a href="manifests.html">Manifests</a>
         <a href="workflows.html">Workflows &amp; runs</a>
-        <a href="identity.html" aria-current="page">Identidade &amp; colaboradores</a>
-        <p class="doc-side__group">Construindo</p>
-        <a href="integrations.html">Integrações</a>
+        <a href="identity.html" aria-current="page">Identity &amp; collaborators</a>
+        <p class="doc-side__group">Building</p>
+        <a href="integrations.html">Integrations</a>
         <a href="surfaces.html">Surfaces</a>
         <a href="cli.html">CLI</a>
-        <a href="self-hosting.html">Self-hosting &amp; primeiros passos</a>
+        <a href="self-hosting.html">Self-hosting &amp; first steps</a>
       </div>
     </div>
   </aside>
 
   <!-- ░░ ARTICLE ░░ -->
   <article class="doc">
-    <p class="crumb"><a href="../">Início</a> / Conceitos / Identidade &amp; colaboradores</p>
-    <h1>Identidade &amp; colaboradores</h1>
-    <p class="doc__lede">O Yggdrasil traz <strong>identidade e workforce embutidos</strong>. Você não precisa parafusar um IdP externo só para saber quem é quem dentro da plataforma: o core já modela os <strong>colaboradores</strong> do seu time interno, os <strong>times</strong> que eles formam e os <strong>grants</strong> que dizem o que cada time pode operar. Tudo versionado, auditável e dirigível pela CLI.</p>
+    <p class="crumb"><a href="../">Home</a> / Docs / Identity &amp; collaborators</p>
+    <h1>Identity &amp; collaborators</h1>
+    <p class="doc__lede">Yggdrasil ships with <strong>identity and workforce built in</strong>. You don't have to bolt on an external IdP just to know who's who inside the platform: the core already models the <strong>collaborators</strong> on your internal team, the <strong>teams</strong> they form and the <strong>grants</strong> that say what each team can operate. Everything versioned, auditable and drivable from the CLI.</p>
 
-    <h2 id="o-modelo">O modelo</h2>
-    <p>Três aggregates compõem a identidade no <code>yggdrasil-core</code>. Eles vivem no Postgres do core e são o sujeito de toda decisão de autorização.</p>
+    <h2 id="the-model">The model</h2>
+    <p>Three aggregates make up identity in the core engine. They live in the core's Postgres and are the subject of every authorization decision.</p>
     <div class="deflist">
-      <div class="deflist__row"><dt>Collaborator</dt><dd>O sujeito interno canônico — uma pessoa do time de plataforma. Tem <code>slug</code>, <code>display_name</code>, <code>primary_email</code>, um <code>status</code> de ciclo de vida, um <code>manager_id</code> opcional, um <code>primary_team_id</code> e bolsos de dados estruturados: <code>employment_data</code>, <code>personal_data</code>, <code>traits</code> e <code>third_party_identities</code>. Cada escrita bem-sucedida bumpa um <code>version</code> (optimistic locking).</dd></div>
-      <div class="deflist__row"><dt>Team</dt><dd>O grupo que agrega colaboradores. Tem <code>slug</code>, <code>name</code>, <code>type</code>, <code>status</code>, um <code>email</code> canônico (que integrações podem usar para provisionar grupos externos) e um <code>parent_team_id</code> — times formam hierarquia. A ligação pessoa↔time é uma <code>TeamMembership</code>, com <code>role</code>, janela de validade (<code>starts_at</code>/<code>ends_at</code>) e <code>source</code>.</dd></div>
-      <div class="deflist__row"><dt>TeamGrant</dt><dd>O que dá poder. Cada grant liga <strong>um time</strong> a <strong>uma action de uma integration_instance</strong> (<code>integration_instance_namespace</code> + <code>integration_instance_name</code> + <code>action_name</code>; <code>action_name: "*"</code> é wildcard). É aqui que a autorização nasce: o usuário herda os grants dos seus times ativos.</dd></div>
+      <div class="deflist__row"><dt>Collaborator</dt><dd>The canonical internal subject — a person on the platform team. It has a <code>slug</code>, <code>display_name</code>, <code>primary_email</code>, a lifecycle <code>status</code>, an optional <code>manager_id</code>, a <code>primary_team_id</code> and structured data pockets: <code>employment_data</code>, <code>personal_data</code>, <code>traits</code> and <code>third_party_identities</code>. Every successful write bumps a <code>version</code> (optimistic locking).</dd></div>
+      <div class="deflist__row"><dt>Team</dt><dd>The group that aggregates collaborators. It has a <code>slug</code>, <code>name</code>, <code>type</code>, <code>status</code>, a canonical <code>email</code> (which integrations can use to provision external groups) and a <code>parent_team_id</code> — teams form a hierarchy. The person↔team link is a <code>TeamMembership</code>, with a <code>role</code>, a validity window (<code>starts_at</code>/<code>ends_at</code>) and a <code>source</code>.</dd></div>
+      <div class="deflist__row"><dt>TeamGrant</dt><dd>What confers power. Each grant ties <strong>one team</strong> to <strong>one action on an integration_instance</strong> (<code>integration_instance_namespace</code> + <code>integration_instance_name</code> + <code>action_name</code>; <code>action_name: "*"</code> is a wildcard). This is where authorization is born: a user inherits the grants of their active teams.</dd></div>
     </div>
-    <p>A permissão efetiva de um colaborador não é um campo no seu registro — ela é <em>derivada</em>. O core resolve as actions <code>yggdrasil:*</code> que a pessoa pode executar a partir dos <code>team_grants</code> dos seus times ativos sobre a instância de gerenciamento do próprio Yggdrasil. Um grant wildcard (ou <code>traits.yggdrasil_admin = true</code>) significa acesso total.</p>
+    <p>A collaborator's effective permission isn't a field on their record — it's <em>derived</em>. The core resolves the <code>yggdrasil:*</code> actions a person can run from the <code>team_grants</code> of their active teams over Yggdrasil's own management instance. A wildcard grant (or <code>traits.yggdrasil_admin = true</code>) means full access.</p>
 
-    <h2 id="sessao-mfa">Sessão &amp; MFA</h2>
-    <p>O login troca credenciais por um <strong>token de sessão</strong>. Você manda <code>identifier</code> (o slug ou e-mail do colaborador) e a senha; o core valida contra a senha local (Argon2id) e devolve um token. A sessão é uma linha persistida com <code>expires_at</code>, <code>last_seen_at</code> e estado de revogação — dá para listar e encerrar sessões individuais (aquele notebook esquecido no evento).</p>
-    <p>Para contas com MFA habilitado, o primeiro passo de login responde <code>mfa_required</code> com a lista de fatores. Aí você reenvia incluindo o segundo fator — um código <strong>TOTP</strong> do autenticador, ou um <strong>recovery code</strong> quando você não tem o app à mão. WebAuthn também é suportado como fator. Pela CLI:</p>
+    <h2 id="session-mfa">Session &amp; MFA</h2>
+    <p>Login trades credentials for a <strong>session token</strong>. You send an <code>identifier</code> (the collaborator's slug or email) and the password; the core validates against the local password (Argon2id) and returns a token. A session is a persisted row with <code>expires_at</code>, <code>last_seen_at</code> and revocation state — you can list and end individual sessions (that laptop left behind at the conference).</p>
+    <p>For accounts with MFA enabled, the first login step responds with <code>mfa_required</code> and the list of factors. You then resend including the second factor — a <strong>TOTP</strong> code from your authenticator, or a <strong>recovery code</strong> when you don't have the app at hand. WebAuthn is also supported as a factor. From the CLI:</p>
     <div class="codeblock">
-      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">login com MFA</span></div>
-      <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> login --server <span class="c-str">https://ygg.interno:9080</span> --username <span class="c-str">ana.silva</span>
-<span class="c-dim"># a conta tem MFA: o core responde mfa_required (factors: totp)</span>
-<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> login --server <span class="c-str">https://ygg.interno:9080</span> --username <span class="c-str">ana.silva</span> --totp <span class="c-str">492013</span>
-<span class="c-ok">✓</span> logged in as ana.silva → context <span class="c-str">"ygg-interno"</span> saved to ~/.yggdrasil/config.yaml
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">login with MFA</span></div>
+      <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> login --server <span class="c-str">https://ygg.internal:9080</span> --username <span class="c-str">ana.silva</span>
+<span class="c-dim"># the account has MFA: the core responds mfa_required (factors: totp)</span>
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> login --server <span class="c-str">https://ygg.internal:9080</span> --username <span class="c-str">ana.silva</span> --totp <span class="c-str">492013</span>
+<span class="c-ok">✓</span> logged in as ana.silva → context <span class="c-str">"ygg-internal"</span> saved to ~/.yggdrasil/config.yaml
 
-<span class="c-dim"># sem o autenticador? use um recovery code:</span>
-<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> login --server <span class="c-str">https://ygg.interno:9080</span> --username <span class="c-str">ana.silva</span> --recovery-code <span class="c-str">9f3a-2bd1-77ce</span></code></pre>
+<span class="c-dim"># no authenticator on hand? use a recovery code:</span>
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> login --server <span class="c-str">https://ygg.internal:9080</span> --username <span class="c-str">ana.silva</span> --recovery-code <span class="c-str">9f3a-2bd1-77ce</span></code></pre>
     </div>
-    <p>Em um terminal interativo, você pode omitir <code>--server</code>, <code>--username</code> e o código: a CLI pergunta. O login persiste um <em>context</em> nomeado em <code>~/.yggdrasil/config.yaml</code> (estilo <code>kubectl</code>), e os comandos seguintes reusam aquele token.</p>
-    <div class="callout callout--warn">Toda escrita carrega <strong>CSRF</strong>. A sessão emite um <code>csrf_token</code> derivado de forma determinística do id da sessão; surfaces espelham esse valor no header <code>X-CSRF-Token</code> em todo <code>POST/PUT/PATCH/DELETE</code>. O middleware recomputa o HMAC no servidor e rejeita divergências — defesa em profundidade sobre cookies <code>SameSite=Strict</code>.</div>
+    <p>In an interactive terminal you can omit <code>--server</code>, <code>--username</code> and the code: the CLI prompts for them. Login persists a named <em>context</em> in <code>~/.yggdrasil/config.yaml</code> (<code>kubectl</code>-style), and subsequent commands reuse that token.</p>
+    <div class="callout callout--warn">Every write carries <strong>CSRF</strong>. The session issues a <code>csrf_token</code> derived deterministically from the session id; surfaces mirror that value in the <code>X-CSRF-Token</code> header on every <code>POST/PUT/PATCH/DELETE</code>. The middleware recomputes the HMAC on the server and rejects mismatches — defense in depth on top of <code>SameSite=Strict</code> cookies.</div>
 
-    <h2 id="provedores">Provedores de auth</h2>
-    <p>Além da senha local, o core fala <strong>OAuth/OIDC</strong> com provedores externos (seu Google Workspace, um IdP corporativo, GitHub). Cada provedor é uma configuração core-owned: <code>name</code>, <code>type</code> (ex.: <code>oidc</code>), URLs de issuer/authorize/token, <code>client_id</code> e um <code>client_secret_ref</code> — você referencia o secret, nunca o inlina. Campos como <code>auto_link_by_email</code> e os <code>*_field</code> dizem ao core como mapear o perfil remoto para um colaborador.</p>
-    <p>Gerencie provedores pela CLI, como qualquer outro recurso declarativo:</p>
+    <h2 id="providers">Auth providers</h2>
+    <p>Beyond the local password, the core speaks <strong>OAuth/OIDC</strong> with external providers (your Google Workspace, a corporate IdP, GitHub). Each provider is a core-owned configuration: <code>name</code>, <code>type</code> (e.g. <code>oidc</code>), issuer/authorize/token URLs, a <code>client_id</code> and a <code>client_secret_ref</code> — you reference the secret, never inline it. Fields like <code>auto_link_by_email</code> and the <code>*_field</code> entries tell the core how to map the remote profile onto a collaborator.</p>
+    <p>Manage providers from the CLI, like any other declarative resource:</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">auth providers</span></div>
       <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> auth provider list
@@ -108,9 +108,9 @@
 
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> auth provider apply -f <span class="c-str">provider-google.yaml</span>
 <span class="c-ok">✓</span> provider <span class="c-str">"workspace-google"</span> applied
-<span class="c-dim">login URL: https://ygg.interno:9080/api/v1/auth/third-party/start/workspace-google</span></code></pre>
+<span class="c-dim">login URL: https://ygg.internal:9080/api/v1/auth/third-party/start/workspace-google</span></code></pre>
     </div>
-    <p>O manifesto de provider é direto — só os campos que o core conhece:</p>
+    <p>The provider manifest is straightforward — just the fields the core knows about:</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">provider-google.yaml</span></div>
       <pre><code><span class="t-key">name:</span> <span class="t-str">"workspace-google"</span>
@@ -119,51 +119,51 @@
 <span class="t-key">display_name:</span> <span class="t-str">"Google Workspace"</span>
 <span class="t-key">issuer_url:</span> <span class="t-str">"https://accounts.google.com"</span>
 <span class="t-key">client_id:</span> <span class="t-str">"1234.apps.googleusercontent.com"</span>
-<span class="t-key">client_secret_ref:</span> <span class="t-str">"aws-sm://yggdrasil/google-oidc"</span>  <span class="t-com"># referência, nunca o segredo</span>
+<span class="t-key">client_secret_ref:</span> <span class="t-str">"aws-sm://yggdrasil/google-oidc"</span>  <span class="t-com"># a reference, never the secret</span>
 <span class="t-key">scopes:</span> [<span class="t-str">"openid"</span>, <span class="t-str">"email"</span>, <span class="t-str">"profile"</span>]
 <span class="t-key">auto_link_by_email:</span> <span class="t-num">true</span>
 <span class="t-key">email_field:</span> <span class="t-str">"email"</span></code></pre>
     </div>
-    <p>Aplicado o provider, o fluxo de terceiros fica disponível em <code>/api/v1/auth/third-party/start/&lt;name&gt;</code> — a própria CLI imprime essa URL para você conferir na hora. Com <code>auto_link_by_email</code>, um login externo casa automaticamente com o colaborador de mesmo e-mail.</p>
+    <p>Once the provider is applied, the third-party flow becomes available at <code>/api/v1/auth/third-party/start/&lt;name&gt;</code> — the CLI prints that URL for you to check on the spot. With <code>auto_link_by_email</code>, an external login automatically matches the collaborator with the same email.</p>
 
-    <h2 id="ciclo-de-vida">Ciclo de vida do colaborador</h2>
-    <p>Pessoas entram, mudam de time, tiram férias, saem — e às vezes voltam. O <code>yggdrasil collaborator</code> cobre esse ciclo inteiro com verbos explícitos, cada um registrando um evento auditável no histórico do colaborador.</p>
+    <h2 id="lifecycle">Collaborator lifecycle</h2>
+    <p>People join, change teams, take leave, leave — and sometimes come back. <code>yggdrasil collaborator</code> covers that whole lifecycle with explicit verbs, each recording an auditable event in the collaborator's history.</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Verbo</th><th>O que faz</th></tr></thead>
+        <thead><tr><th>Verb</th><th>What it does</th></tr></thead>
         <tbody>
-          <tr><td><code>create</code></td><td>Cria o registro — <code>--slug</code> e <code>--display-name</code> obrigatórios; opcionais <code>--email</code>, <code>--role</code>, <code>--manager</code>, <code>--team</code>, <code>--start-date</code>.</td></tr>
-          <tr><td><code>get</code> · <code>list</code></td><td>Lê um colaborador (por id ou slug) ou lista todos (<code>list --status &lt;s&gt;</code>).</td></tr>
-          <tr><td><code>update</code></td><td>Patch de <code>--display-name</code>, <code>--email</code> ou <code>--status</code>.</td></tr>
-          <tr><td><code>offboard</code></td><td>Desliga — <code>--reason &lt;voluntary|involuntary|contract-end|deceased&gt;</code>, com <code>--end-date</code>/<code>--notice-days</code>.</td></tr>
-          <tr><td><code>suspend</code> · <code>unsuspend</code></td><td>Suspende e reativa o acesso temporariamente.</td></tr>
-          <tr><td><code>re-onboard</code></td><td>Readmite quem voltou (<code>--start-date</code>, <code>--role</code>).</td></tr>
-          <tr><td><code>role-change</code></td><td>Troca o cargo (<code>--new-role</code>).</td></tr>
-          <tr><td><code>team-add</code> · <code>team-remove</code></td><td>Entra/sai de um time (<code>--team</code>, opcional <code>--role-in-team</code>).</td></tr>
-          <tr><td><code>manager-change</code></td><td>Reaponta o gestor (<code>--new-manager</code>, vazio para limpar).</td></tr>
-          <tr><td><code>attribute-set</code></td><td>Grava um trait tipado (<code>--key</code>, <code>--value</code>, <code>--type string|number|bool|json</code>).</td></tr>
-          <tr><td><code>absence-start</code> · <code>absence-end</code></td><td>Registra ausência (<code>--type vacation|leave-medical|leave-parental|leave-sabbatical</code>).</td></tr>
-          <tr><td><code>lifecycle-events</code></td><td>Lê o histórico auditável do colaborador (<code>--type</code>, <code>--limit</code>).</td></tr>
-          <tr><td><code>provider-state</code></td><td>Mostra como os provedores externos estão materializando aquela identidade.</td></tr>
+          <tr><td><code>create</code></td><td>Creates the record — <code>--slug</code> and <code>--display-name</code> required; optional <code>--email</code>, <code>--role</code>, <code>--manager</code>, <code>--team</code>, <code>--start-date</code>.</td></tr>
+          <tr><td><code>get</code> · <code>list</code></td><td>Reads one collaborator (by id or slug) or lists all (<code>list --status &lt;s&gt;</code>).</td></tr>
+          <tr><td><code>update</code></td><td>Patches <code>--display-name</code>, <code>--email</code> or <code>--status</code>.</td></tr>
+          <tr><td><code>offboard</code></td><td>Offboards — <code>--reason &lt;voluntary|involuntary|contract-end|deceased&gt;</code>, with <code>--end-date</code>/<code>--notice-days</code>.</td></tr>
+          <tr><td><code>suspend</code> · <code>unsuspend</code></td><td>Suspends and reactivates access temporarily.</td></tr>
+          <tr><td><code>re-onboard</code></td><td>Re-admits someone who came back (<code>--start-date</code>, <code>--role</code>).</td></tr>
+          <tr><td><code>role-change</code></td><td>Changes the role (<code>--new-role</code>).</td></tr>
+          <tr><td><code>team-add</code> · <code>team-remove</code></td><td>Joins/leaves a team (<code>--team</code>, optional <code>--role-in-team</code>).</td></tr>
+          <tr><td><code>manager-change</code></td><td>Reassigns the manager (<code>--new-manager</code>, empty to clear).</td></tr>
+          <tr><td><code>attribute-set</code></td><td>Writes a typed trait (<code>--key</code>, <code>--value</code>, <code>--type string|number|bool|json</code>).</td></tr>
+          <tr><td><code>absence-start</code> · <code>absence-end</code></td><td>Records an absence (<code>--type vacation|leave-medical|leave-parental|leave-sabbatical</code>).</td></tr>
+          <tr><td><code>lifecycle-events</code></td><td>Reads the collaborator's auditable history (<code>--type</code>, <code>--limit</code>).</td></tr>
+          <tr><td><code>provider-state</code></td><td>Shows how external providers are materializing that identity.</td></tr>
         </tbody>
       </table>
     </div>
-    <p>Um onboarding típico encadeia poucos comandos — e o resto (provisionamento nos sistemas externos via integrações) reage ao estado:</p>
+    <p>A typical onboarding chains a few commands — and the rest (provisioning on external systems via integrations) reacts to the state:</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">onboarding</span></div>
       <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> collaborator create --slug <span class="c-str">ana.silva</span> --display-name <span class="c-str">"Ana Silva"</span> \
-    --email <span class="c-str">ana@interno</span> --role <span class="c-str">platform-engineer</span> --team <span class="c-str">team-infra</span>
+    --email <span class="c-str">ana@internal</span> --role <span class="c-str">platform-engineer</span> --team <span class="c-str">team-infra</span>
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> collaborator team-add <span class="c-str">ana.silva</span> --team <span class="c-str">team-oncall</span> --role-in-team <span class="c-str">responder</span>
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> collaborator lifecycle-events <span class="c-str">ana.silva</span> --limit <span class="c-str">5</span></code></pre>
     </div>
 
-    <h2 id="identidade-e-manifesto">Identidade também é manifesto</h2>
-    <p>Times e grants não vivem só na CLI imperativa: eles são <strong>kinds de manifesto</strong> (<code>team</code>, <code>team_grant</code>, <code>team_role_binding</code>), então você os declara, versiona e reconcilia como qualquer outro recurso. É GitOps para a sua própria força de trabalho.</p>
-    <div class="callout callout--note">A identidade aqui é o seu <strong>time interno de plataforma</strong> — quem opera o Yggdrasil — e <em>não</em> os usuários finais dos seus produtos. Veja <a href="manifests.html">Manifestos</a> para o modelo declarativo de <code>team</code>/<code>team_grant</code>, e <a href="workflows.html">Workflows &amp; runs</a> para como uma mudança de identidade dispara provisionamento.</div>
+    <h2 id="identity-as-manifest">Identity is a manifest too</h2>
+    <p>Teams and grants don't only live in the imperative CLI: they're <strong>manifest kinds</strong> (<code>team</code>, <code>team_grant</code>, <code>team_role_binding</code>), so you declare, version and reconcile them like any other resource. It's GitOps for your own workforce.</p>
+    <div class="callout callout--note">Identity here is your <strong>internal platform team</strong> — the people who operate Yggdrasil — and <em>not</em> the end users of your products. See <a href="manifests.html">Manifests</a> for the declarative <code>team</code>/<code>team_grant</code> model, and <a href="workflows.html">Workflows &amp; runs</a> for how an identity change triggers provisioning.</div>
 
-    <nav class="doc-nav" aria-label="Navegação entre conceitos">
-      <a href="workflows.html"><span>← Anterior</span><strong>Workflows &amp; runs</strong></a>
-      <a class="is-next" href="integrations.html"><span>Próximo →</span><strong>Integrações</strong></a>
+    <nav class="doc-nav" aria-label="Concept navigation">
+      <a href="workflows.html"><span>← Previous</span><strong>Workflows &amp; runs</strong></a>
+      <a class="is-next" href="integrations.html"><span>Next →</span><strong>Integrations</strong></a>
     </nav>
   </article>
 </div>
@@ -176,32 +176,32 @@
         <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
         <span class="brand__name">Yggdrasil</span>
       </a>
-      <p class="footer__tag">A árvore-mundo que conecta seus sistemas.<br />Open source · Apache-2.0.</p>
+      <p class="footer__tag">The world-tree that connects your systems.<br />Open source · Apache-2.0.</p>
     </div>
-    <nav class="footer__col" aria-label="Conceitos">
-      <h5>Conceitos</h5>
-      <a href="index.html">Visão geral</a>
-      <a href="manifests.html">Manifestos</a>
-      <a href="integrations.html">Integrações</a>
+    <nav class="footer__col" aria-label="Docs">
+      <h5>Docs</h5>
+      <a href="index.html">Overview</a>
+      <a href="manifests.html">Manifests</a>
+      <a href="integrations.html">Integrations</a>
       <a href="surfaces.html">Surfaces</a>
     </nav>
-    <nav class="footer__col" aria-label="Repositórios">
-      <h5>Código</h5>
+    <nav class="footer__col" aria-label="Code">
+      <h5>Code</h5>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">CLI</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">SDK (Go)</a>
-      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Template de integração</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">Go SDK</a>
+      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Integration template</a>
+      <a href="https://github.com/dakasa-yggdrasil/surface-template" target="_blank" rel="noopener">Surface template</a>
     </nav>
-    <nav class="footer__col" aria-label="Organização">
+    <nav class="footer__col" aria-label="Organization">
       <h5>Org</h5>
       <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">GitHub</a>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Releases</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">Licença</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
     </nav>
   </div>
   <div class="wrap footer__bottom">
     <span>© 2026 DaKasa · Yggdrasil</span>
-    <span>Feito para rodar na sua infra.</span>
+    <span>Built to run on your infra.</span>
   </div>
 </footer>
 

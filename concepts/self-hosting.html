@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Self-hosting &amp; primeiros passos · Conceitos · Yggdrasil</title>
-<meta name="description" content="Do zero a um control plane rodando na sua infra em um comando: instale a CLI, suba o stack standalone com yggdrasil init, conecte a um core existente e rode seu primeiro workflow." />
+<title>Self-hosting &amp; first steps · Docs · Yggdrasil</title>
+<meta name="description" content="From zero to a control plane running on your infra in one command: install the CLI, bring up the standalone stack with yggdrasil init, connect to an existing control plane, and run your first workflow." />
 <link rel="icon" href="../assets/favicon-tree.png" type="image/png" />
 <meta name="theme-color" content="#0A0E0F" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="Self-hosting & primeiros passos · Yggdrasil" />
-<meta property="og:description" content="Do zero a um control plane rodando na sua infra em um comando. Instale a CLI, suba o stack standalone, conecte a um core existente e rode seu primeiro workflow." />
+<meta property="og:title" content="Self-hosting & first steps · Yggdrasil" />
+<meta property="og:description" content="From zero to a control plane running on your infra in one command. Install the CLI, bring up the standalone stack, connect to an existing control plane, and run your first workflow." />
 <meta property="og:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,25 +22,25 @@
 <!-- ░░ NAV ░░ -->
 <header class="nav is-scrolled" id="nav">
   <div class="wrap nav__inner">
-    <a class="brand" href="../" aria-label="Yggdrasil — início">
+    <a class="brand" href="../" aria-label="Yggdrasil — home">
       <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
       <span class="brand__name">Yggdrasil</span>
     </a>
-    <nav class="nav__links" aria-label="Principal">
-      <a href="../">Início</a>
-      <a href="../#integrations">Integrações</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="../">Home</a>
+      <a href="../#integrations">Integrations</a>
       <a href="../#surfaces">Surfaces</a>
       <a href="../#cli">CLI</a>
-      <a href="index.html" aria-current="page">Conceitos</a>
+      <a href="index.html" aria-current="page">Docs</a>
     </nav>
     <div class="nav__cta">
-      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub da organização">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub organization">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <a class="btn btn--solid btn--sm" href="../#start">Começar</a>
+      <a class="btn btn--solid btn--sm" href="../#start">Get started</a>
     </div>
-    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -53,42 +53,42 @@
     <button class="doc-side__toggle" aria-expanded="false">Self-hosting</button>
     <div class="doc-side__nav">
       <div class="doc-side__inner">
-        <p class="doc-side__group">Fundamentos</p>
-        <a href="index.html">Visão geral &amp; arquitetura</a>
-        <a href="manifests.html">Manifestos</a>
+        <p class="doc-side__group">Fundamentals</p>
+        <a href="index.html">Overview &amp; architecture</a>
+        <a href="manifests.html">Manifests</a>
         <a href="workflows.html">Workflows &amp; runs</a>
-        <a href="identity.html">Identidade &amp; colaboradores</a>
-        <p class="doc-side__group">Construindo</p>
-        <a href="integrations.html">Integrações</a>
+        <a href="identity.html">Identity &amp; collaborators</a>
+        <p class="doc-side__group">Building</p>
+        <a href="integrations.html">Integrations</a>
         <a href="surfaces.html">Surfaces</a>
         <a href="cli.html">CLI</a>
-        <a href="self-hosting.html" aria-current="page">Self-hosting &amp; primeiros passos</a>
+        <a href="self-hosting.html" aria-current="page">Self-hosting &amp; first steps</a>
       </div>
     </div>
   </aside>
 
   <!-- ░░ ARTICLE ░░ -->
   <article class="doc">
-    <p class="crumb"><a href="../">Início</a> / Conceitos / Self-hosting</p>
-    <h1>Self-hosting &amp; primeiros passos</h1>
-    <p class="doc__lede">Do zero a um <strong>control plane rodando na sua infra</strong> — em um comando. <code>yggdrasil init</code> sobe Postgres, o core e os adapters, cria o primeiro admin e salva um contexto da CLI. Você sai dele com um stack vivo e já autenticado, pronto para aplicar manifestos e rodar workflows.</p>
+    <p class="crumb"><a href="../">Home</a> / Docs / Self-hosting &amp; first steps</p>
+    <h1>Self-hosting &amp; first steps</h1>
+    <p class="doc__lede">From zero to a <strong>control plane running on your infra</strong> — in one command. <code>yggdrasil init</code> brings up Postgres, the core engine and adapters, creates the first admin and saves a CLI context. You walk away with a live, already-authenticated stack, ready to apply manifests and run workflows.</p>
 
-    <h2 id="requisitos">Requisitos</h2>
-    <p>O modo standalone empacota tudo em containers, então a lista é curta:</p>
+    <h2 id="requirements">Requirements</h2>
+    <p>Standalone mode packages everything into containers, so the list is short:</p>
     <div class="deflist">
-      <div class="deflist__row"><dt>Docker</dt><dd>O engine precisa estar instalado e no <code>PATH</code>. O <code>init</code> aborta cedo com uma mensagem clara se não encontrar o binário <code>docker</code>.</dd></div>
-      <div class="deflist__row"><dt>Compose v2</dt><dd>O plugin <code>docker compose</code> (v2, com espaço — não o antigo <code>docker-compose</code>). O <code>init</code> valida rodando <code>docker compose version</code> antes de qualquer coisa.</dd></div>
-      <div class="deflist__row"><dt>A CLI <code>yggdrasil</code></dt><dd>Um único binário estático, sem dependências de runtime. Instalação na próxima seção.</dd></div>
-      <div class="deflist__row"><dt>(opcional) um kubeconfig</dt><dd>O adapter de Kubernetes monta <code>~/.kube/config</code> em modo somente-leitura. Só é necessário se você for usar workflows que aplicam objetos K8s.</dd></div>
+      <div class="deflist__row"><dt>Docker</dt><dd>The engine must be installed and on your <code>PATH</code>. <code>init</code> aborts early with a clear message if it can't find the <code>docker</code> binary.</dd></div>
+      <div class="deflist__row"><dt>Compose v2</dt><dd>The <code>docker compose</code> plugin (v2, with a space — not the legacy <code>docker-compose</code>). <code>init</code> validates it by running <code>docker compose version</code> before anything else.</dd></div>
+      <div class="deflist__row"><dt>The <code>yggdrasil</code> CLI</dt><dd>A single static binary, no runtime dependencies. Installation in the next section.</dd></div>
+      <div class="deflist__row"><dt>(optional) a kubeconfig</dt><dd>The Kubernetes adapter mounts <code>~/.kube/config</code> read-only. You only need it if you'll run workflows that apply K8s objects.</dd></div>
     </div>
-    <p>Para o modo <em>existing cluster</em> (<code>--server</code>), você não precisa de Docker local nenhum — só de acesso de rede a um <code>yggdrasil-core</code> que já roda.</p>
+    <p>For <em>existing cluster</em> mode (<code>--server</code>), you need no local Docker at all — just network access to a core engine that's already running.</p>
 
-    <h2 id="instalar-a-cli">Instalar a CLI</h2>
-    <p>A CLI é distribuída como binário pré-compilado nas <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">GitHub Releases</a>. Não há imagem de container: é um único binário estático por OS/arquitetura. Os arquivos seguem o padrão <code>yggdrasil_&lt;versão&gt;_&lt;os&gt;_&lt;arch&gt;.tar.gz</code> (Windows sai em <code>.zip</code>), com <code>os</code> e <code>arch</code> em minúsculas.</p>
+    <h2 id="install-the-cli">Install the CLI</h2>
+    <p>The CLI ships as a pre-built binary on <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">GitHub Releases</a>. There's no container image: it's a single static binary per OS/architecture. The files follow the <code>yggdrasil_&lt;version&gt;_&lt;os&gt;_&lt;arch&gt;.tar.gz</code> pattern (Windows ships as <code>.zip</code>), with <code>os</code> and <code>arch</code> lowercase.</p>
     <div class="codeblock">
-      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">instalar a CLI</span></div>
-      <pre><code><span class="c-dim"># escolha a release e seu OS/arch (minúsculos)</span>
-<span class="c-prompt">$</span> VERSION=<span class="c-str">0.1.0</span>          <span class="c-dim"># a release desejada</span>
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">install the CLI</span></div>
+      <pre><code><span class="c-dim"># pick the release and your OS/arch (lowercase)</span>
+<span class="c-prompt">$</span> VERSION=<span class="c-str">0.1.0</span>          <span class="c-dim"># the release you want</span>
 <span class="c-prompt">$</span> OS=<span class="c-str">darwin</span>            <span class="c-dim"># darwin | linux | windows</span>
 <span class="c-prompt">$</span> ARCH=<span class="c-str">arm64</span>            <span class="c-dim"># amd64 | arm64</span>
 
@@ -99,16 +99,16 @@
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> version
 <span class="c-ok">✓</span> yggdrasil <span class="c-str">v0.1.0</span></code></pre>
     </div>
-    <p>Prefere compilar? <code>go install github.com/dakasa-yggdrasil/yggdrasil/cmd/yggdrasil@latest</code> (Go 1.25+) também funciona. E um binário de release sabe se atualizar sozinho: <code>yggdrasil update</code> baixa, verifica o checksum do goreleaser e troca o binário no lugar; <code>yggdrasil update --check</code> só reporta se há versão nova.</p>
+    <p>Prefer to build from source? <code>go install github.com/dakasa-yggdrasil/yggdrasil/cmd/yggdrasil@latest</code> (Go 1.25+) works too. And a release binary knows how to update itself: <code>yggdrasil update</code> downloads, verifies the goreleaser checksum and swaps the binary in place; <code>yggdrasil update --check</code> only reports whether a new version is available.</p>
 
-    <h2 id="subir-standalone">Subir standalone</h2>
-    <p>Com Docker e a CLI no lugar, um comando põe o control plane inteiro de pé:</p>
+    <h2 id="bring-up-standalone">Bring up standalone</h2>
+    <p>With Docker and the CLI in place, one command stands up the entire control plane:</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">yggdrasil init</span></div>
       <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> init
-<span class="c-dim">  escrevendo docker-compose.yml + .env em ./yggdrasil</span>
+<span class="c-dim">  writing docker-compose.yml + .env to ./yggdrasil</span>
 <span class="c-dim">  docker compose up -d …</span>
-<span class="c-dim">  aguardando /readyz …</span>
+<span class="c-dim">  waiting for /readyz …</span>
 
 <span class="c-ok">✓</span> yggdrasil is ready
 
@@ -118,49 +118,49 @@
   username:  <span class="c-str">admin</span>
   password:  <span class="c-str">k3p…q9</span>  <span class="c-y">(generated — save it now)</span></code></pre>
     </div>
-    <p>Por baixo, o <code>init</code> escreve um <code>docker-compose.yml</code> e um <code>.env</code> (com senhas aleatórias) no diretório alvo — <code>./yggdrasil</code> por padrão, ajustável com <code>--dir</code> — roda <code>docker compose up -d</code>, faz polling em <code>/readyz</code> (que só responde quando o banco está alcançável e o bootstrap terminou), loga como admin e persiste o contexto em <code>~/.yggdrasil/config.yaml</code>. A senha do admin é gerada aleatoriamente e impressa uma única vez ao final — anote-a. (Use <code>--admin-username</code> / <code>--admin-password</code> para fixar credenciais.)</p>
-    <p>O stack que sobe:</p>
+    <p>Under the hood, <code>init</code> writes a <code>docker-compose.yml</code> and a <code>.env</code> (with random passwords) to the target directory — <code>./yggdrasil</code> by default, adjustable with <code>--dir</code> — runs <code>docker compose up -d</code>, polls <code>/readyz</code> (which only responds once the database is reachable and bootstrap has finished), logs in as admin and persists the context to <code>~/.yggdrasil/config.yaml</code>. The admin password is randomly generated and printed exactly once at the end — write it down. (Use <code>--admin-username</code> / <code>--admin-password</code> to pin credentials.)</p>
+    <p>The stack it brings up:</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Serviço</th><th>Papel</th><th>Porta</th></tr></thead>
+        <thead><tr><th>Service</th><th>Role</th><th>Port</th></tr></thead>
         <tbody>
-          <tr><td><code>postgres</code></td><td>Estado do core (manifestos versionados, runs, identidade)</td><td>interna :5432</td></tr>
-          <tr><td><code>yggdrasil-core</code></td><td>O servidor com a autoridade — API HTTP <code>/api/v1</code></td><td>:9080 (host)</td></tr>
-          <tr><td><code>integration-kubernetes</code></td><td>Adapter K8s (aplica objetos no seu cluster)</td><td>adapter :8081 · health :8080</td></tr>
-          <tr><td><code>integration-schema-migrations</code></td><td>Adapter de migrações SQL (provider goose-postgres)</td><td>adapter :8082 · health :8080</td></tr>
+          <tr><td><code>postgres</code></td><td>Core state (versioned manifests, runs, identity)</td><td>internal :5432</td></tr>
+          <tr><td><code>core</code></td><td>The core engine — server with authority, HTTP API <code>/api/v1</code></td><td>:9080 (host)</td></tr>
+          <tr><td><code>integration-kubernetes</code></td><td>K8s adapter (applies objects to your cluster)</td><td>adapter :8081 · health :8080</td></tr>
+          <tr><td><code>integration-schema-migrations</code></td><td>SQL migrations adapter (goose-postgres provider)</td><td>adapter :8082 · health :8080</td></tr>
         </tbody>
       </table>
     </div>
-    <p>Só a porta do core (<code>9080</code>) é publicada no host por padrão; ela é configurável com <code>--port</code>. Confirme tudo com <code>yggdrasil status</code>.</p>
+    <p>Only the core port (<code>9080</code>) is published to the host by default; it's configurable with <code>--port</code>. Confirm everything with <code>yggdrasil status</code>.</p>
 
-    <h2 id="conectar-a-um-core-existente">Conectar a um core existente</h2>
-    <p>Se você já subiu o <code>yggdrasil-core</code> por conta própria — Helm, Kustomize ou qualquer outro caminho — pule o compose inteiro e só registre o contexto. O <code>init --server</code> apenas faz o login e persiste a configuração:</p>
+    <h2 id="connect-to-an-existing-control-plane">Connect to an existing control plane</h2>
+    <p>If you already brought up the core engine yourself — Helm, Kustomize or any other path — skip the whole compose flow and just register the context. <code>init --server</code> only logs in and persists the configuration:</p>
     <div class="codeblock">
-      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">core existente</span></div>
-      <pre><code><span class="c-dim"># anexa a um core já rodando (sem Docker local)</span>
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">existing control plane</span></div>
+      <pre><code><span class="c-dim"># attach to an already-running control plane (no local Docker)</span>
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> init --server <span class="c-str">https://cp.example.com</span>
 
-<span class="c-dim"># ou autentique uma conta a qualquer momento (suporta MFA)</span>
+<span class="c-dim"># or authenticate an account at any time (supports MFA)</span>
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> login --server <span class="c-str">https://cp.example.com</span> --username <span class="c-str">ops@example.com</span>
 <span class="c-dim">  Authenticator code (TOTP): ••••••</span>
 <span class="c-ok">✓</span> logged in as <span class="c-str">ops@example.com</span> → context <span class="c-str">"cp-example-com"</span> saved</code></pre>
     </div>
-    <p>O nome do contexto é derivado do host do servidor (para não sobrescrever o <code>local</code> do standalone), mas pode ser fixado com <code>--context</code>. Para contas com MFA, o <code>login</code> pede o código do autenticador automaticamente num terminal interativo; em CI, passe <code>--totp &lt;código&gt;</code> ou <code>--recovery-code &lt;código&gt;</code>. O <code>config.yaml</code> é multi-contexto no estilo <code>kubectl</code>: troque o ativo com a variável <code>YGGDRASIL_CONTEXT</code>.</p>
+    <p>The context name is derived from the server host (so it won't overwrite the standalone <code>local</code> one), but you can pin it with <code>--context</code>. For accounts with MFA, <code>login</code> prompts for the authenticator code automatically in an interactive terminal; in CI, pass <code>--totp &lt;code&gt;</code> or <code>--recovery-code &lt;code&gt;</code>. The <code>config.yaml</code> is multi-context, <code>kubectl</code>-style: switch the active one with the <code>YGGDRASIL_CONTEXT</code> variable.</p>
 
-    <h2 id="transporte">Transporte: HTTP por padrão, AMQP opt-in</h2>
-    <p>O core e os adapters conversam por um transporte. <strong>HTTP é o padrão</strong> e está sempre disponível — não há nada para configurar. RabbitMQ/AMQP é <strong>opt-in</strong>: o compose declara o RabbitMQ sob o profile <code>amqp</code>, então ele só sobe quando você pede explicitamente.</p>
+    <h2 id="transport">Transport: HTTP by default, AMQP opt-in</h2>
+    <p>The core and the adapters talk over a transport. <strong>HTTP is the default</strong> and is always available — there's nothing to configure. RabbitMQ/AMQP is <strong>opt-in</strong>: the compose setup declares RabbitMQ under the <code>amqp</code> profile, so it only comes up when you explicitly ask for it.</p>
     <div class="codeblock">
-      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">habilitar AMQP</span></div>
-      <pre><code><span class="c-dim"># 1. no .env gerado, descomente as credenciais e a URL do broker</span>
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">enable AMQP</span></div>
+      <pre><code><span class="c-dim"># 1. in the generated .env, uncomment the credentials and broker URL</span>
 <span class="c-dim">#    BROKER_URL=amqp://yggdrasil:…@rabbitmq:5672/</span>
 
-<span class="c-dim"># 2. suba com o profile amqp ativo</span>
+<span class="c-dim"># 2. bring it up with the amqp profile active</span>
 <span class="c-prompt">$</span> <span class="c-cmd">docker</span> compose --profile amqp up -d</code></pre>
     </div>
-    <p>Com <code>BROKER_URL</code> vazio, o core sobe em modo HTTP-only e o serviço RabbitMQ nem é iniciado. Você só liga o AMQP quando o volume de despacho justifica o broker.</p>
+    <p>With <code>BROKER_URL</code> empty, the core comes up in HTTP-only mode and the RabbitMQ service is never started. You only turn AMQP on when your dispatch volume justifies the broker.</p>
 
-    <h2 id="primeiro-workflow">Primeiro workflow</h2>
-    <p>Com o stack de pé e o contexto salvo, o ciclo é sempre <code>apply</code> (cria uma nova versão do manifesto) seguido de <code>run</code> (despacha a execução). O <code>run</code> é síncrono por padrão e imprime o progresso passo a passo:</p>
+    <h2 id="first-workflow">First workflow</h2>
+    <p>With the stack up and the context saved, the cycle is always <code>apply</code> (creates a new version of the manifest) followed by <code>run</code> (dispatches the execution). <code>run</code> is synchronous by default and prints progress step by step:</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">apply + run</span></div>
       <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> apply -f <span class="c-str">my-workflow.yaml</span>
@@ -172,10 +172,10 @@ workflow status: <span class="c-str">succeeded</span>
   <span class="c-ok">✓</span> apply-objects                        succeeded  (kubernetes.apply)
   <span class="c-ok">✓</span> verify                               succeeded</code></pre>
     </div>
-    <p>Passe <code>--input k=v</code> quantas vezes precisar; os valores vão como string e o schema do workflow coage o tipo no servidor. Quer só ver o diff antes de aplicar? <code>yggdrasil apply -f … --dry-run</code>. Quer dispatch assíncrono? <code>yggdrasil run … --async</code> devolve um <em>run id</em> para acompanhar com <code>yggdrasil logs</code> e <code>yggdrasil ops get</code>.</p>
+    <p>Pass <code>--input k=v</code> as many times as you need; the values go through as strings and the workflow schema coerces the type on the server. Want to just see the diff before applying? <code>yggdrasil apply -f … --dry-run</code>. Want async dispatch? <code>yggdrasil run … --async</code> returns a <em>run id</em> to follow with <code>yggdrasil logs</code> and <code>yggdrasil ops get</code>.</p>
 
-    <h2 id="deploy-do-control-plane">Deploy do control plane</h2>
-    <p>Há um atalho dedicado para promover o próprio control plane: <code>yggdrasil deploy control-plane</code> aplica um manifesto <code>control_plane</code> e, em seguida, despacha o workflow seedado <code>yggdrasil-deploy-control-plane</code> contra ele — açúcar sintático sobre <code>apply</code> + <code>run</code> que já codifica os <em>instances</em> de Kubernetes e schema-migrations da topologia de bootstrap.</p>
+    <h2 id="deploy-the-control-plane">Deploy the control plane</h2>
+    <p>There's a dedicated shortcut to promote the control plane itself: <code>yggdrasil deploy control-plane</code> applies a <code>control_plane</code> manifest and then dispatches the seeded <code>yggdrasil-deploy-control-plane</code> workflow against it — syntactic sugar over <code>apply</code> + <code>run</code> that already encodes the Kubernetes and schema-migrations <em>instances</em> of the bootstrap topology.</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">deploy control-plane</span></div>
       <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> deploy control-plane -f <span class="c-str">cp.yaml</span>
@@ -183,12 +183,12 @@ workflow status: <span class="c-str">succeeded</span>
 → dispatching workflow <span class="c-str">yggdrasil-deploy-control-plane</span>
 workflow status: <span class="c-str">succeeded</span></code></pre>
     </div>
-    <p>Use <code>--no-run</code> para só aplicar o manifesto sem disparar o workflow, e <code>-f -</code> para ler de stdin. Os <em>instances</em> usados pelo deploy podem ser sobrescritos com <code>--kubernetes-instance</code> e <code>--schema-migrations-instance</code>.</p>
+    <p>Use <code>--no-run</code> to apply the manifest without firing the workflow, and <code>-f -</code> to read from stdin. The <em>instances</em> used by the deploy can be overridden with <code>--kubernetes-instance</code> and <code>--schema-migrations-instance</code>.</p>
 
-    <div class="callout callout--tip">Daqui, aprofunde no modelo declarativo em <a href="manifests.html">Manifestos</a>, pluge seus sistemas via <a href="integrations.html">Integrações</a> e exponha tudo internamente com <a href="surfaces.html">Surfaces</a>. Tudo continua rodando na sua infra.</div>
+    <div class="callout callout--tip">From here, dig into the declarative model in <a href="manifests.html">Manifests</a>, plug in your systems via <a href="integrations.html">Integrations</a> and expose everything internally with <a href="surfaces.html">Surfaces</a>. It all keeps running on your infra.</div>
 
-    <nav class="doc-nav" aria-label="Navegação entre conceitos">
-      <a href="cli.html"><span>← Anterior</span><strong>CLI</strong></a>
+    <nav class="doc-nav" aria-label="Concept navigation">
+      <a href="cli.html"><span>← Previous</span><strong>CLI</strong></a>
       <span class="spacer"></span>
     </nav>
   </article>
@@ -202,32 +202,32 @@ workflow status: <span class="c-str">succeeded</span></code></pre>
         <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
         <span class="brand__name">Yggdrasil</span>
       </a>
-      <p class="footer__tag">A árvore-mundo que conecta seus sistemas.<br />Open source · Apache-2.0.</p>
+      <p class="footer__tag">The world-tree that connects your systems.<br />Open source · Apache-2.0.</p>
     </div>
-    <nav class="footer__col" aria-label="Conceitos">
-      <h5>Conceitos</h5>
-      <a href="index.html">Visão geral</a>
-      <a href="manifests.html">Manifestos</a>
-      <a href="integrations.html">Integrações</a>
+    <nav class="footer__col" aria-label="Docs">
+      <h5>Docs</h5>
+      <a href="index.html">Overview</a>
+      <a href="manifests.html">Manifests</a>
+      <a href="integrations.html">Integrations</a>
       <a href="surfaces.html">Surfaces</a>
     </nav>
-    <nav class="footer__col" aria-label="Repositórios">
-      <h5>Código</h5>
+    <nav class="footer__col" aria-label="Code">
+      <h5>Code</h5>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">CLI</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">SDK (Go)</a>
-      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Template de integração</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">Go SDK</a>
+      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Integration template</a>
+      <a href="https://github.com/dakasa-yggdrasil/surface-template" target="_blank" rel="noopener">Surface template</a>
     </nav>
-    <nav class="footer__col" aria-label="Organização">
+    <nav class="footer__col" aria-label="Organization">
       <h5>Org</h5>
       <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">GitHub</a>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Releases</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">Licença</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
     </nav>
   </div>
   <div class="wrap footer__bottom">
     <span>© 2026 DaKasa · Yggdrasil</span>
-    <span>Feito para rodar na sua infra.</span>
+    <span>Built to run on your infra.</span>
   </div>
 </footer>
 

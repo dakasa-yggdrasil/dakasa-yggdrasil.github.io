@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Surfaces · Conceitos · Yggdrasil</title>
-<meta name="description" content="Surfaces são as bordas de UI internas do Yggdrasil — o painel do time de plataforma, não um frontend de cliente. O modelo slime, os invariantes e como criar a sua." />
+<title>Surfaces · Docs · Yggdrasil</title>
+<meta name="description" content="A surface is an edge — an extension that plugs into an integration or into the core engine itself. Any shape (dashboard, API, MCP server, bot, webhook edge), with a fixed set of invariants." />
 <link rel="icon" href="../assets/favicon-tree.png" type="image/png" />
 <meta name="theme-color" content="#0A0E0F" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Surfaces · Yggdrasil" />
-<meta property="og:description" content="As bordas de UI internas do Yggdrasil: forma livre (dashboard, wizard, API, MCP, bot), esqueleto rígido (os invariantes)." />
+<meta property="og:description" content="Surfaces are how Yggdrasil grows new reach: extension edges in any shape (dashboard, API, MCP, bot), held to a fixed set of invariants." />
 <meta property="og:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,25 +22,25 @@
 <!-- ░░ NAV ░░ -->
 <header class="nav is-scrolled" id="nav">
   <div class="wrap nav__inner">
-    <a class="brand" href="../" aria-label="Yggdrasil — início">
+    <a class="brand" href="../" aria-label="Yggdrasil — home">
       <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
       <span class="brand__name">Yggdrasil</span>
     </a>
-    <nav class="nav__links" aria-label="Principal">
-      <a href="../">Início</a>
-      <a href="../#integrations">Integrações</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="../">Home</a>
+      <a href="../#integrations">Integrations</a>
       <a href="../#surfaces">Surfaces</a>
       <a href="../#cli">CLI</a>
-      <a href="index.html" aria-current="page">Conceitos</a>
+      <a href="index.html" aria-current="page">Docs</a>
     </nav>
     <div class="nav__cta">
-      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub da organização">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub organization">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <a class="btn btn--solid btn--sm" href="../#start">Começar</a>
+      <a class="btn btn--solid btn--sm" href="../#start">Get started</a>
     </div>
-    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -53,91 +53,90 @@
     <button class="doc-side__toggle" aria-expanded="false">Surfaces</button>
     <div class="doc-side__nav">
       <div class="doc-side__inner">
-        <p class="doc-side__group">Fundamentos</p>
-        <a href="index.html">Visão geral &amp; arquitetura</a>
-        <a href="manifests.html">Manifestos</a>
+        <p class="doc-side__group">Fundamentals</p>
+        <a href="index.html">Overview &amp; architecture</a>
+        <a href="manifests.html">Manifests</a>
         <a href="workflows.html">Workflows &amp; runs</a>
-        <a href="identity.html">Identidade &amp; colaboradores</a>
-        <p class="doc-side__group">Construindo</p>
-        <a href="integrations.html">Integrações</a>
+        <a href="identity.html">Identity &amp; collaborators</a>
+        <p class="doc-side__group">Building</p>
+        <a href="integrations.html">Integrations</a>
         <a href="surfaces.html" aria-current="page">Surfaces</a>
         <a href="cli.html">CLI</a>
-        <a href="self-hosting.html">Self-hosting &amp; primeiros passos</a>
+        <a href="self-hosting.html">Self-hosting &amp; first steps</a>
       </div>
     </div>
   </aside>
 
   <!-- ░░ ARTICLE ░░ -->
   <article class="doc">
-    <p class="crumb"><a href="../">Início</a> / Conceitos / Surfaces</p>
+    <p class="crumb"><a href="../">Home</a> / Docs / Surfaces</p>
     <h1>Surfaces</h1>
-    <p class="doc__lede">Surfaces são as <strong>bordas de UI internas</strong> do Yggdrasil — o painel pelo qual o time de plataforma enxerga e opera o control plane. É a janela para os <em>operadores da empresa</em>, não um frontend para o cliente final. Cada surface consome a API do core e não guarda estado de negócio próprio.</p>
+    <p class="doc__lede">A surface is an <strong>edge</strong> — an extension that plugs into an integration, or into the core engine itself. It's how Yggdrasil grows new reach. A surface does <em>not</em> have to be a UI: it can be a dashboard, an API, an MCP server, a bot, a webhook edge — any shape. Each surface rides the platform session and keeps no business state of its own.</p>
 
-    <h2 id="escopo">Escopo: IDP interno, não produto de end-user</h2>
-    <p>Antes de qualquer coisa, a regra que define se algo é ou não uma surface do Yggdrasil. O Yggdrasil é a <strong>plataforma interna de engenharia (IDP)</strong> do time da empresa operadora — colaboradores, devops, engenheiros de plataforma. Ele administra recursos que são preocupação <em>interna</em> da companhia: setup de infra, configuração de integrações, auditoria, reconciliação dos próprios ativos.</p>
-    <p>Os <strong>serviços de backend</strong> da empresa, por outro lado, rodam operações para os <em>end-users</em> dela (clientes, consumidores): pagamentos, assinaturas, uploads de perfil. Uma surface vive sempre do lado do Yggdrasil dessa linha — é uma visão/despachante sobre o estado interno do IDP, nunca um app voltado ao cliente final.</p>
-    <div class="callout callout--warn">A heurística de público (CLAUDE.md §0): se a audiência é o <strong>time interno da empresa</strong> vendo/gerenciando recursos da própria companhia → é surface do Yggdrasil. Se a audiência é o <strong>end-user do produto</strong> → não é surface, é o frontend de produto do operador. Um "dashboard de saúde de webhooks do Stripe" para o time de plataforma é uma surface; uma página "Pague sua fatura" para o cliente, não — mesmo que ela acabe despachando algum passo de infra pelo Yggdrasil.</div>
+    <h2 id="edge">An edge, not a frontend</h2>
+    <p>Think of a surface as a <strong>plug</strong>. An integration knows how to talk to one external system; the core engine holds the manifests, runs and authority. A surface attaches to one of those — extending an integration with a new face, or extending the core itself — and turns that reach into something people or machines can use.</p>
+    <p>Because it's defined by where it attaches and not by what it looks like, a surface can be human-facing or machine-facing. A health dashboard for a Stripe integration, a read-only REST API over run history, an MCP server that exposes workflows to an LLM, a Slack bot that dispatches a deploy — all of these are surfaces. What makes something a surface is not its form; it's the set of invariants below.</p>
 
-    <h2 id="slime">O modelo slime</h2>
-    <p>Se a integração é a <strong>espinha rígida</strong> do Yggdrasil (provisionamento idempotente, convenção de nomes estrita), a surface é a <strong>geleia</strong> que se molda em volta. A forma é deliberadamente livre: um dashboard, um wizard de onboarding, uma API REST/gRPC, um servidor MCP para ferramentas de LLM, um bot de Slack, um widget embutido em iframe — ou um híbrido de tudo isso. O que faz algo ser uma surface não é a forma, é o conjunto de invariantes abaixo.</p>
-    <p>A geleia também se adapta à pilha do operador, não o contrário: a surface não assume qual cloud a hospeda, qual CDN serve seus assets, nem qual framework de UI a constrói (React, Vue, Svelte, Go server-rendered — todos válidos). Esse é o <strong>princípio Lego</strong> aplicado às bordas.</p>
+    <h2 id="slime">The slime model</h2>
+    <p>If an integration is Yggdrasil's <strong>rigid spine</strong> (idempotent provisioning, strict naming convention), a surface is the <strong>slime</strong> that molds around it. The shape is deliberately free-form: a dashboard, an onboarding wizard, a REST/gRPC API, an MCP server for LLM tooling, a Slack bot, a webhook edge, an iframe-embedded widget — or a hybrid of all of these. What makes something a surface isn't the shape, it's the set of invariants below.</p>
+    <p>The slime also adapts to the operator's stack, not the other way around: a surface doesn't assume which cloud hosts it, which CDN serves its assets, or which UI framework builds it (React, Vue, Svelte, Go server-rendered — all valid). That's the <strong>Lego principle</strong> applied to the edges.</p>
 
-    <h2 id="invariantes">Os invariantes</h2>
-    <p>Mesmo a surface mais custom e estranha honra estes seis invariantes. Falhar em qualquer um significa que aquilo não é uma surface do Yggdrasil (pode ser um ótimo web app, mas não uma surface):</p>
+    <h2 id="invariants">The invariants</h2>
+    <p>Even the most custom, strangest surface honors these six invariants. Failing any one of them means it isn't a Yggdrasil surface (it may be a great web app, an API or a bot — just not a surface):</p>
     <ol>
-      <li><strong>Stateless quanto a estado de negócio</strong> — a surface não <em>possui</em> estado de negócio. Estado de UX no nível da sessão (rascunhos de formulário, painéis expandidos, cache de observação) é aceitável; o estado de negócio vive nas integrações e backends.</li>
-      <li><strong>Auth pela sessão do Yggdrasil (delegada)</strong> — nunca reimplemente login do zero. Surfaces públicas usam tokens read-only do Yggdrasil com escopo reduzido; as privadas usam a sessão completa.</li>
-      <li><strong>Backend-agnostic (via core)</strong> — chama <code>/api/v1/*</code> para ler dados e despacha workflows para mutações. Não fala direto com Stripe/AWS/GitHub — isso passa pelas integrações.</li>
-      <li><strong>Multi-tenant aware</strong> — respeita o escopo de <code>integration_instance</code>. O operador Acme vê os recursos da Acme; a DaKasa vê os da DaKasa. Visibilidade entre tenants exige uma concessão explícita de RBAC.</li>
-      <li><strong>Federável (deployable)</strong> — é um container/binário independente que pluga no console (ou roda standalone para variantes públicas). Não precisa do monorepo do Yggdrasil para compilar.</li>
-      <li><strong>Sem autoridade de negócio</strong> — a surface despacha, visualiza, compõe. Ela <em>não</em> decide regras de negócio ("quem cobrar", "quando reembolsar", "tem permissão para a ação X"). Essas decisões vivem nas integrações, nos workflows ou em backends com a devida autoridade.</li>
+      <li><strong>Stateless as to business state</strong> — a surface doesn't <em>own</em> business state. Session-level UX state (form drafts, expanded panels, an observation cache) is fine; business state lives in the integrations and backends.</li>
+      <li><strong>Auth via the platform session (delegated)</strong> — never reimplement login from scratch. Public surfaces use reduced-scope, read-only platform tokens; private ones use the full session.</li>
+      <li><strong>Backend-agnostic (via the core)</strong> — it calls <code>/api/v1/*</code> to read data and dispatches workflows for mutations. It doesn't talk directly to Stripe/AWS/GitHub — that goes through the integrations.</li>
+      <li><strong>Multi-tenant aware</strong> — it respects the <code>integration_instance</code> scope. Operator Acme sees Acme's resources; DaKasa sees DaKasa's. Cross-tenant visibility requires an explicit RBAC grant.</li>
+      <li><strong>Federable (deployable)</strong> — it's a standalone container/binary that plugs into the console (or runs standalone for public variants). It doesn't need any central codebase to build.</li>
+      <li><strong>No business authority</strong> — a surface dispatches, visualizes, composes. It does <em>not</em> decide business rules ("who to charge", "when to refund", "is action X allowed"). Those decisions live in the integrations, the workflows or backends with the proper authority.</li>
     </ol>
-    <div class="callout callout--note">O invariante 6 inclui autorização: a surface <em>pode</em> renderizar elementos de UI condicionalmente a partir das permissões da sessão, mas nunca pode assumir a ausência de uma verificação no servidor. A dica de permissão da surface é uma cortesia de UX, não uma fronteira de segurança — toda mutação despachada é autorizada server-side.</div>
+    <div class="callout callout--note">Invariant 6 includes authorization: a surface <em>may</em> render UI elements conditionally from the session's permissions, but it can never assume the absence of a server-side check. A surface's permission hint is a UX courtesy, not a security boundary — every dispatched mutation is authorized server-side.</div>
 
     <h2 id="console">Console &amp; design system</h2>
-    <p>O <strong>console</strong> (<code>surface-console</code>) é a surface de referência: um SPA React 19 + Vite que renderiza a API do core para operadores humanos — colaboradores, times, integrações, workflows e identidade. Toda leitura e escrita passa por <code>/api/v1/*</code>; a sessão e toda a autoridade moram no core. Você pode forkar, reestilizar ou trocar o console inteiro por outra UI apontada para o mesmo core — a plataforma não muda.</p>
-    <p>O console agrega as demais surfaces, e cada integração pode publicar a sua própria (um painel por integração). O que mantém todas com a mesma cara é o <strong>surface-toolkit</strong> — o design system compartilhado em React. Ele entrega três coisas que toda surface precisa:</p>
+    <p>The <strong>console</strong> is the reference surface: a React 19 + Vite SPA that renders the core's API for human operators — collaborators, teams, integrations, workflows and identity. Every read and write goes through <code>/api/v1/*</code>; the session and all authority live in the core. You can fork it, restyle it, or swap the whole console for another UI pointed at the same core — the platform doesn't change.</p>
+    <p>The console aggregates the other surfaces, and each integration can publish its own (one panel per integration). What keeps them all looking the same is the <strong>surface-toolkit</strong> — the shared React design system. It delivers the three things every surface needs:</p>
     <div class="pieces">
       <div class="piece">
-        <h4>Tokens &amp; tema</h4>
-        <p>O <code>SurfaceThemeProvider</code> e os tokens (cores, espaçamento, tipografia) garantem que todas as surfaces compartilhem um único visual.</p>
+        <h4>Tokens &amp; theme</h4>
+        <p>The <code>SurfaceThemeProvider</code> and the tokens (colors, spacing, typography) ensure every surface shares a single look.</p>
       </div>
       <div class="piece">
         <h4>IntegrationAdminShell</h4>
-        <p>O shell que cuida de roteamento, layout de abas, o seletor de instância e os estados de loading/vazio/erro — o autor só escreve o corpo das abas. Há também o <code>TeamContextShell</code>, centrado em time.</p>
+        <p>The shell that handles routing, tab layout, the instance picker and the loading/empty/error states — the author only writes the body of the tabs. There's also <code>TeamContextShell</code>, centered on a team.</p>
       </div>
       <div class="piece">
-        <h4>Hooks de dados</h4>
-        <p>Hooks React Query (<code>useYggdrasilAPI</code>, <code>useInstance</code>, <code>useDriftStatus</code>, <code>useSurfaceQuery</code>…) que falam com o core pela sessão, mais abas prontas (<code>DriftTab</code>, <code>IdentitiesTab</code>, <code>RecentRunsTab</code>).</p>
+        <h4>Data hooks</h4>
+        <p>React Query hooks (<code>useYggdrasilAPI</code>, <code>useInstance</code>, <code>useDriftStatus</code>, <code>useSurfaceQuery</code>…) that talk to the core through the session, plus ready-made tabs (<code>DriftTab</code>, <code>IdentitiesTab</code>, <code>RecentRunsTab</code>).</p>
       </div>
     </div>
-    <p>Todo hook passa por <code>useYggdrasilAPI</code>, que faz <code>fetch</code> com <code>credentials: "include"</code> contra a base <code>/api/v1</code> — as surfaces nunca reimplementam auth, elas pegam carona na sessão delegada do Yggdrasil.</p>
+    <p>Every hook goes through <code>useYggdrasilAPI</code>, which does <code>fetch</code> with <code>credentials: "include"</code> against the <code>/api/v1</code> base — surfaces never reimplement auth, they ride Yggdrasil's delegated session.</p>
 
-    <h2 id="criar">Criar a sua</h2>
-    <p>O caminho recomendado é a CLI, que clona o <code>surface-template</code> (o scaffold canônico), descarta o histórico git, reescreve o caminho do módulo para <code>github.com/&lt;org&gt;/surface-&lt;nome&gt;</code> e roda <code>git init</code>. O resultado já compila e <code>go test ./...</code> passa.</p>
+    <h2 id="create">Create your own</h2>
+    <p>The recommended path is the CLI, which clones the <code>surface-template</code> (the canonical scaffold), discards the git history, rewrites the module path to <code>github.com/&lt;org&gt;/surface-&lt;name&gt;</code> and runs <code>git init</code>. The result already compiles and <code>go test ./...</code> passes.</p>
     <div class="codeblock">
-      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">scaffold de uma surface</span></div>
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">scaffolding a surface</span></div>
       <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> new surface <span class="c-str">webhook-health</span> --owner <span class="c-str">acme</span>
 <span class="c-ok">✓</span> scaffold ready
   <span class="c-dim">directory:</span> ./surface-webhook-health
   <span class="c-dim">module:   </span> github.com/acme/surface-webhook-health
-<span class="c-dim"># o template compila out of the box; go test ./... passa</span></code></pre>
+<span class="c-dim"># the template compiles out of the box; go test ./... passes</span></code></pre>
     </div>
-    <p>Se você trabalha dentro de um checkout do monorepo e quer a surface instalada sob <code>surfaces/</code>, há os helpers de workspace — e o subcomando <code>surfaces</code> gerencia o conjunto ativo:</p>
+    <p>If you work inside a workspace checkout and want the surface installed under <code>surfaces/</code>, there are workspace helpers — and the <code>surfaces</code> subcommand manages the active set:</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">yggdrasil surfaces</span></div>
-      <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> surfaces list                  <span class="c-dim"># surfaces disponíveis no catálogo</span>
-<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> surfaces scaffold <span class="c-str">webhook-health</span>  <span class="c-dim"># cria sob surfaces/</span>
-<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> surfaces activate <span class="c-str">webhook-health</span>  <span class="c-dim"># adiciona ao compose ativo</span>
-<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> surfaces active                <span class="c-dim"># lista as ativas no momento</span></code></pre>
+      <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> surfaces list                  <span class="c-dim"># surfaces available in the catalog</span>
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> surfaces scaffold <span class="c-str">webhook-health</span>  <span class="c-dim"># creates under surfaces/</span>
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> surfaces activate <span class="c-str">webhook-health</span>  <span class="c-dim"># adds it to the active compose</span>
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> surfaces active                <span class="c-dim"># lists the currently active ones</span></code></pre>
     </div>
-    <p>O scaffold registra um <code>surface.manifest.json</code> (<code>kind: surface</code>) que declara categoria, runtime, os <code>core_contracts</code> que a surface consome e suas <code>capabilities</code> — e serve <code>/</code>, <code>/healthz</code> e <code>/readyz</code> de saída. A partir daí você adiciona seus handlers (ou monta o <code>IntegrationAdminShell</code> do toolkit) e publica a imagem.</p>
+    <p>The scaffold registers a <code>surface.manifest.json</code> (<code>kind: surface</code>) that declares the category, runtime, the <code>core_contracts</code> the surface consumes and its <code>capabilities</code> — and serves <code>/</code>, <code>/healthz</code> and <code>/readyz</code> out of the box. From there you add your handlers (or mount the toolkit's <code>IntegrationAdminShell</code>) and publish the image.</p>
 
-    <div class="callout callout--tip">A lei completa de toda surface — o modelo slime, os seis invariantes, o que é fortemente desencorajado e o que é proibido — está no <a href="https://github.com/dakasa-yggdrasil/surface-template/blob/main/SURFACE_CONTRACT.md" target="_blank" rel="noopener">SURFACE_CONTRACT.md</a>. Leia-o antes de qualquer mudança em uma surface. A forma é sua; os invariantes são o esqueleto da geleia.</div>
+    <div class="callout callout--tip">The full law of every surface — the slime model, the six invariants, what's strongly discouraged and what's forbidden — lives in the <a href="https://github.com/dakasa-yggdrasil/surface-template" target="_blank" rel="noopener">surface-template</a>. Read it before any change to a surface. The shape is yours; the invariants are the skeleton of the slime.</div>
 
-    <nav class="doc-nav" aria-label="Navegação entre conceitos">
-      <a href="integrations.html"><span>← Anterior</span><strong>Integrações</strong></a>
-      <a class="is-next" href="cli.html"><span>Próximo →</span><strong>CLI</strong></a>
+    <nav class="doc-nav" aria-label="Concept navigation">
+      <a href="integrations.html"><span>← Previous</span><strong>Integrations</strong></a>
+      <a class="is-next" href="cli.html"><span>Next →</span><strong>CLI</strong></a>
     </nav>
   </article>
 </div>
@@ -150,32 +149,32 @@
         <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
         <span class="brand__name">Yggdrasil</span>
       </a>
-      <p class="footer__tag">A árvore-mundo que conecta seus sistemas.<br />Open source · Apache-2.0.</p>
+      <p class="footer__tag">The world-tree that connects your systems.<br />Open source · Apache-2.0.</p>
     </div>
-    <nav class="footer__col" aria-label="Conceitos">
-      <h5>Conceitos</h5>
-      <a href="index.html">Visão geral</a>
-      <a href="manifests.html">Manifestos</a>
-      <a href="integrations.html">Integrações</a>
+    <nav class="footer__col" aria-label="Docs">
+      <h5>Docs</h5>
+      <a href="index.html">Overview</a>
+      <a href="manifests.html">Manifests</a>
+      <a href="integrations.html">Integrations</a>
       <a href="surfaces.html">Surfaces</a>
     </nav>
-    <nav class="footer__col" aria-label="Repositórios">
-      <h5>Código</h5>
+    <nav class="footer__col" aria-label="Code">
+      <h5>Code</h5>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">CLI</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">SDK (Go)</a>
-      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Template de integração</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">Go SDK</a>
+      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Integration template</a>
+      <a href="https://github.com/dakasa-yggdrasil/surface-template" target="_blank" rel="noopener">Surface template</a>
     </nav>
-    <nav class="footer__col" aria-label="Organização">
+    <nav class="footer__col" aria-label="Organization">
       <h5>Org</h5>
       <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">GitHub</a>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Releases</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">Licença</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
     </nav>
   </div>
   <div class="wrap footer__bottom">
     <span>© 2026 DaKasa · Yggdrasil</span>
-    <span>Feito para rodar na sua infra.</span>
+    <span>Built to run on your infra.</span>
   </div>
 </footer>
 

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Integrações · Conceitos · Yggdrasil</title>
-<meta name="description" content="Integrações são adapters plugáveis: o modelo família → tipo → instância → provider, o contrato Describe(), transportes http_json e RabbitMQ, e como instalar ou criar a sua." />
+<title>Integrations · Docs · Yggdrasil</title>
+<meta name="description" content="Integrations are pluggable adapters: the family → type → instance → provider model, the explicit Describe() contract, the http_json and RabbitMQ transports, and how to install or build your own." />
 <link rel="icon" href="../assets/favicon-tree.png" type="image/png" />
 <meta name="theme-color" content="#0A0E0F" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="Integrações · Yggdrasil" />
-<meta property="og:description" content="Adapters plugáveis que conectam o Yggdrasil aos seus sistemas — o contrato Describe(), os transportes e como instalar ou criar a sua." />
+<meta property="og:title" content="Integrations · Yggdrasil" />
+<meta property="og:description" content="Pluggable adapters that connect Yggdrasil to your systems — the Describe() contract, the transports, and how to install or build your own." />
 <meta property="og:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,25 +22,25 @@
 <!-- ░░ NAV ░░ -->
 <header class="nav is-scrolled" id="nav">
   <div class="wrap nav__inner">
-    <a class="brand" href="../" aria-label="Yggdrasil — início">
+    <a class="brand" href="../" aria-label="Yggdrasil — home">
       <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
       <span class="brand__name">Yggdrasil</span>
     </a>
-    <nav class="nav__links" aria-label="Principal">
-      <a href="../">Início</a>
-      <a href="../#integrations">Integrações</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="../">Home</a>
+      <a href="../#integrations">Integrations</a>
       <a href="../#surfaces">Surfaces</a>
       <a href="../#cli">CLI</a>
-      <a href="index.html" aria-current="page">Conceitos</a>
+      <a href="index.html" aria-current="page">Docs</a>
     </nav>
     <div class="nav__cta">
-      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub da organização">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub organization">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <a class="btn btn--solid btn--sm" href="../#start">Começar</a>
+      <a class="btn btn--solid btn--sm" href="../#start">Get started</a>
     </div>
-    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -50,79 +50,79 @@
 
   <!-- ░░ SIDEBAR ░░ -->
   <aside class="doc-side" id="docSide">
-    <button class="doc-side__toggle" aria-expanded="false">Integrações</button>
+    <button class="doc-side__toggle" aria-expanded="false">Integrations</button>
     <div class="doc-side__nav">
       <div class="doc-side__inner">
-        <p class="doc-side__group">Fundamentos</p>
-        <a href="index.html">Visão geral &amp; arquitetura</a>
-        <a href="manifests.html">Manifestos</a>
+        <p class="doc-side__group">Fundamentals</p>
+        <a href="index.html">Overview &amp; architecture</a>
+        <a href="manifests.html">Manifests</a>
         <a href="workflows.html">Workflows &amp; runs</a>
-        <a href="identity.html">Identidade &amp; colaboradores</a>
-        <p class="doc-side__group">Construindo</p>
-        <a href="integrations.html" aria-current="page">Integrações</a>
+        <a href="identity.html">Identity &amp; collaborators</a>
+        <p class="doc-side__group">Building</p>
+        <a href="integrations.html" aria-current="page">Integrations</a>
         <a href="surfaces.html">Surfaces</a>
         <a href="cli.html">CLI</a>
-        <a href="self-hosting.html">Self-hosting &amp; primeiros passos</a>
+        <a href="self-hosting.html">Self-hosting &amp; first steps</a>
       </div>
     </div>
   </aside>
 
   <!-- ░░ ARTICLE ░░ -->
   <article class="doc">
-    <p class="crumb"><a href="../">Início</a> / Conceitos / Integrações</p>
-    <h1>Integrações</h1>
-    <p class="doc__lede">Uma integração é um <strong>adapter plugável</strong>: um worker independente que sabe falar com <em>um</em> sistema externo — Stripe, Grafana, AWS, GitHub — e o expõe ao Yggdrasil por um contrato explícito. Conecte tudo o que você opera e componha como peças de Lego: troque um provider sem reescrever o workflow que o usa.</p>
+    <p class="crumb"><a href="../">Home</a> / Docs / Integrations</p>
+    <h1>Integrations</h1>
+    <p class="doc__lede">An integration is a <strong>pluggable adapter</strong>: an independent worker that knows how to talk to <em>one</em> external system — Stripe, Grafana, AWS, GitHub — and exposes it to Yggdrasil through an explicit contract. Connect everything you operate and compose them like Lego pieces: swap a provider without rewriting the workflow that uses it.</p>
 
-    <h2 id="o-que-faz">O que um adapter faz (e o que não faz)</h2>
-    <p>Um adapter é a <strong>camada declarativa de infraestrutura</strong>: ele reconcilia o estado de recursos externos (APIs de terceiros, sistemas, clouds) com o estado desejado que você expressa — garantindo idempotência, adoção de recursos pré-existentes e detecção de drift. Ele <em>não</em> carrega regra de negócio, não tem banco próprio e não assume qual cloud, cofre de segredos ou broker você usa.</p>
-    <p>A fronteira é nítida: o Yggdrasil cuida do que é <strong>responsabilidade interna da empresa</strong> (registrar o webhook do Stripe no painel, provisionar o bucket S3 dos assets, criar o repositório do time). Cobrar um cliente final ou guardar o pagamento dele é negócio — vive no backend, não aqui.</p>
+    <h2 id="what-it-does">What an adapter does (and what it doesn't)</h2>
+    <p>An adapter is the <strong>declarative infrastructure layer</strong>: it reconciles the state of external resources (third-party APIs, systems, clouds) with the desired state you express — guaranteeing idempotency, adoption of pre-existing resources, and drift detection. It does <em>not</em> carry business logic, has no database of its own, and makes no assumption about which cloud, secrets vault, or broker you use.</p>
+    <p>The boundary is sharp: Yggdrasil handles what is the company's <strong>internal responsibility</strong> (registering the Stripe webhook in the dashboard, provisioning the S3 bucket for assets, creating the team's repository). Charging an end customer or storing their payment is business — it lives in the backend, not here.</p>
 
-    <h2 id="modelo">O modelo família → tipo → instância → provider</h2>
-    <p>Quatro níveis organizam o catálogo de integrações. Entendê-los é metade da batalha:</p>
+    <h2 id="model">The family → type → instance → provider model</h2>
+    <p>Four levels organize the integration catalog. Understanding them is half the battle:</p>
     <div class="deflist">
-      <div class="deflist__row"><dt>família</dt><dd>O <strong>contrato</strong> compartilhado — o conjunto de operações que um ou mais providers implementam. Um repositório de adapter declara uma família (ex.: <code>grafana</code>) e a registra como autoridade sobre o vocabulário de capacidades.</dd></div>
-      <div class="deflist__row"><dt>integration_type</dt><dd>Uma <strong>implementação concreta</strong> da família, com seu <code>Describe()</code>, schemas e versão. Uma mesma família pode ter vários tipos: <code>grafana-runtime</code> (cliente HTTP contra um Grafana existente) e <code>grafana-kubernetes</code> (gerador da instalação) convivem sob a família <code>grafana</code>.</dd></div>
-      <div class="deflist__row"><dt>integration_instance</dt><dd>O <strong>tenant</strong>. Um tipo serve N instâncias, cada uma com credenciais isoladas: <code>stripe-acme</code> e <code>stripe-corp</code> são duas instâncias do tipo <code>stripe</code>, cada uma com sua própria API key e webhook secret. A instância é a unidade multi-tenant.</dd></div>
-      <div class="deflist__row"><dt>provider</dt><dd>O <strong>worker em execução</strong> — o pod do adapter (o binário Go) que de fato traduz capacidades em chamadas ao sistema externo. O campo <code>Provider</code> no <code>Describe()</code> identifica a família que ele atende.</dd></div>
+      <div class="deflist__row"><dt>family</dt><dd>The shared <strong>contract</strong> — the set of operations that one or more providers implement. An adapter declares a family (e.g. <code>grafana</code>) and registers it as the authority over the capability vocabulary.</dd></div>
+      <div class="deflist__row"><dt>integration_type</dt><dd>A <strong>concrete implementation</strong> of the family, with its <code>Describe()</code>, schemas, and version. A single family can have several types: <code>grafana-runtime</code> (an HTTP client against an existing Grafana) and <code>grafana-kubernetes</code> (the installation generator) coexist under the <code>grafana</code> family.</dd></div>
+      <div class="deflist__row"><dt>integration_instance</dt><dd>The <strong>tenant</strong>. One type serves N instances, each with isolated credentials: <code>stripe-acme</code> and <code>stripe-corp</code> are two instances of the <code>stripe</code> type, each with its own API key and webhook secret. The instance is the multi-tenant unit.</dd></div>
+      <div class="deflist__row"><dt>provider</dt><dd>The <strong>running worker</strong> — the adapter pod (the Go binary) that actually translates capabilities into calls to the external system. The <code>Provider</code> field in <code>Describe()</code> identifies the family it serves.</dd></div>
     </div>
-    <div class="flow" role="img" aria-label="Fluxo: família contém o contrato, o tipo implementa, a instância é o tenant, o provider executa">
-      <div class="flow__node"><span class="flow__tag">contrato</span><strong>família</strong><small>grafana</small></div>
+    <div class="flow" role="img" aria-label="Flow: family holds the contract, the type implements it, the instance is the tenant, the provider executes">
+      <div class="flow__node"><span class="flow__tag">contract</span><strong>family</strong><small>grafana</small></div>
       <div class="flow__arrow" aria-hidden="true">→</div>
-      <div class="flow__node"><span class="flow__tag">implementação</span><strong>integration_type</strong><small>grafana-runtime</small></div>
+      <div class="flow__node"><span class="flow__tag">implementation</span><strong>integration_type</strong><small>grafana-runtime</small></div>
       <div class="flow__arrow" aria-hidden="true">→</div>
       <div class="flow__node"><span class="flow__tag">tenant</span><strong>integration_instance</strong><small>grafana-prod · grafana-staging</small></div>
       <div class="flow__arrow" aria-hidden="true">→</div>
-      <div class="flow__node flow__node--core"><span class="flow__tag">runtime</span><strong>provider</strong><small>o pod do adapter</small></div>
+      <div class="flow__node flow__node--core"><span class="flow__tag">runtime</span><strong>provider</strong><small>the adapter pod</small></div>
     </div>
 
-    <h2 id="describe">O contrato Describe()</h2>
-    <p>No boot, o core faz um <strong>handshake</strong> com cada adapter: pede o <code>Describe()</code> e valida o catálogo antes de despachar qualquer trabalho. Falhou o handshake, o adapter não fica elegível para execução. O <code>Describe()</code> publica tudo o que o core precisa saber: a versão, o transporte, os <em>resource types</em>, os schemas de credencial e instância (com metadados de UI que as surfaces consomem) e o catálogo de ações.</p>
-    <p>Abaixo, uma forma enxuta do <code>Describe()</code> do adapter <code>stripe</code> (<code>AdapterVersion</code> 2.4.0), derivada do <code>spec.go</code> real:</p>
+    <h2 id="describe">The Describe() contract</h2>
+    <p>At boot, the core performs a <strong>handshake</strong> with each adapter: it requests <code>Describe()</code> and validates the catalog before dispatching any work. If the handshake fails, the adapter is not eligible for execution. <code>Describe()</code> publishes everything the core needs to know: the version, the transport, the <em>resource types</em>, the credential and instance schemas (with UI metadata that surfaces consume), and the action catalog.</p>
+    <p>Below is a trimmed-down shape of the <code>stripe</code> adapter's <code>Describe()</code> (<code>AdapterVersion</code> 2.4.0):</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">describe.stripe.yaml</span></div>
       <pre><code><span class="t-key">provider:</span> <span class="t-str">stripe</span>
 <span class="t-key">adapter:</span>
   <span class="t-key">version:</span> <span class="t-str">"2.4.0"</span>
-  <span class="t-key">transport:</span> <span class="t-str">http_json</span>          <span class="t-com"># RPC sobre HTTP</span>
+  <span class="t-key">transport:</span> <span class="t-str">http_json</span>          <span class="t-com"># RPC over HTTP</span>
   <span class="t-key">timeout_seconds:</span> <span class="t-num">30</span>
   <span class="t-key">endpoints:</span>
     <span class="t-key">describe:</span> <span class="t-str">/rpc/describe</span>
     <span class="t-key">execute:</span>  <span class="t-str">/rpc/execute</span>
 <span class="t-key">capabilities:</span> [<span class="t-str">describe</span>, <span class="t-str">execute</span>]
 
-<span class="t-key">credential_schema:</span>             <span class="t-com"># segredos do tenant (nunca inline em manifesto)</span>
+<span class="t-key">credential_schema:</span>             <span class="t-com"># tenant secrets (never inline in a manifest)</span>
   <span class="t-key">properties:</span>
     <span class="t-key">stripe_api_key:</span>
       <span class="t-key">type:</span> <span class="t-str">string</span>
       <span class="t-key">secret:</span> <span class="t-str">true</span>
       <span class="t-key">label:</span> <span class="t-str">"Stripe API key"</span>
 
-<span class="t-key">instance_schema:</span>               <span class="t-com"># config não-secreta por instância</span>
+<span class="t-key">instance_schema:</span>               <span class="t-com"># non-secret per-instance config</span>
   <span class="t-key">properties:</span>
     <span class="t-key">stripe_webhook_secret:</span> { <span class="t-key">type:</span> <span class="t-str">string</span>, <span class="t-key">secret:</span> <span class="t-str">true</span> }
-    <span class="t-key">stripe_account_id:</span>     { <span class="t-key">type:</span> <span class="t-str">string</span> }   <span class="t-com"># opcional: Stripe Connect</span>
+    <span class="t-key">stripe_account_id:</span>     { <span class="t-key">type:</span> <span class="t-str">string</span> }   <span class="t-com"># optional: Stripe Connect</span>
 
-<span class="t-key">resource_types:</span>                <span class="t-com"># recursos com identidade externa estável</span>
+<span class="t-key">resource_types:</span>                <span class="t-com"># resources with a stable external identity</span>
   - <span class="t-key">name:</span> <span class="t-str">customer</span>
     <span class="t-key">canonical_prefix:</span> <span class="t-str">thirdparty.stripe.customer</span>
     <span class="t-key">default_actions:</span> [<span class="t-str">ensure_customer</span>, <span class="t-str">observe_customers</span>, <span class="t-str">destroy_customer</span>]
@@ -130,73 +130,73 @@
     <span class="t-key">canonical_prefix:</span> <span class="t-str">thirdparty.stripe.webhook_endpoint</span>
     <span class="t-key">default_actions:</span> [<span class="t-str">ensure_webhook_endpoint</span>, <span class="t-str">observe_webhook_endpoints</span>, <span class="t-str">destroy_webhook_endpoint</span>]</code></pre>
     </div>
-    <p>Cada <em>resource type</em> tem um trio canônico: <code>ensure_*</code> (mutação idempotente que adota se já existe), <code>observe_*</code> (leitura, sem efeito) e <code>destroy_*</code> (remoção terminal — 404 do provider conta como sucesso). Há também <code>discover_*</code> (enumeração do lado do provider) e ações fora do trio na allowlist, como <code>create_refund</code> (movimento de dinheiro) e <code>verify_webhook_signature</code> (helper puro). Um linter (<code>contractcheck</code>) roda em CI e quebra o build se o <code>Describe()</code> divergir do que o <code>Execute()</code> realmente aceita.</p>
-    <div class="callout callout--warn">Nomes CRUD (<code>create_*</code>, <code>list_*</code>, <code>get_*</code>, <code>delete_*</code>, <code>update_*</code>) para operações de recurso são proibidos — quebram a convenção. Renomeações antigas sobrevivem só como <em>legacy aliases</em>, resolvidos na borda do <code>Execute()</code> e removidos no próximo major.</div>
+    <p>Each <em>resource type</em> has a canonical trio: <code>ensure_*</code> (idempotent mutation that adopts what already exists), <code>observe_*</code> (read, no effect), and <code>destroy_*</code> (terminal removal — a 404 from the provider counts as success). There's also <code>discover_*</code> (provider-side enumeration) and out-of-trio actions on the allowlist, such as <code>create_refund</code> (money movement) and <code>verify_webhook_signature</code> (a pure helper). A linter (<code>contractcheck</code>) runs in CI and breaks the build if <code>Describe()</code> diverges from what <code>Execute()</code> actually accepts.</p>
+    <div class="callout callout--warn">CRUD names (<code>create_*</code>, <code>list_*</code>, <code>get_*</code>, <code>delete_*</code>, <code>update_*</code>) for resource operations are forbidden — they break the convention. Older renames survive only as <em>legacy aliases</em>, resolved at the edge of <code>Execute()</code> and removed in the next major.</div>
 
-    <h2 id="transportes">Transportes</h2>
-    <p>O core fala com o adapter por um dos dois transportes — declarados no <code>Describe().adapter.transport</code> e escolhidos pelo worker via a variável <code>YGGDRASIL_TRANSPORT</code>:</p>
+    <h2 id="transports">Transports</h2>
+    <p>The core talks to the adapter over one of two transports — declared in <code>Describe().adapter.transport</code> and chosen by the worker via the <code>YGGDRASIL_TRANSPORT</code> variable:</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Transporte</th><th>Quando</th><th>Como</th></tr></thead>
+        <thead><tr><th>Transport</th><th>When</th><th>How</th></tr></thead>
         <tbody>
           <tr>
             <td><code>http_json</code></td>
-            <td>Padrão. <code>YGGDRASIL_TRANSPORT</code> ausente, <code>http</code> ou <code>http_json</code>.</td>
-            <td>O worker faz <code>ListenHTTP</code> na <code>ADAPTER_PORT</code> (padrão <strong>8081</strong>) e atende <code>/rpc/describe</code> + <code>/rpc/execute</code>. Um servidor de health separado roda na <code>HEALTHCHECK_PORT</code> (padrão 8080) com <code>/healthz</code> e <code>/readyz</code>.</td>
+            <td>Default. <code>YGGDRASIL_TRANSPORT</code> absent, <code>http</code>, or <code>http_json</code>.</td>
+            <td>The worker calls <code>ListenHTTP</code> on <code>ADAPTER_PORT</code> (default <strong>8081</strong>) and serves <code>/rpc/describe</code> + <code>/rpc/execute</code>. A separate health server runs on <code>HEALTHCHECK_PORT</code> (default 8080) with <code>/healthz</code> and <code>/readyz</code>.</td>
           </tr>
           <tr>
             <td><code>rabbitmq</code> / <code>amqp</code></td>
-            <td>Opt-in. <code>YGGDRASIL_TRANSPORT=amqp</code> (ou <code>rabbitmq</code>).</td>
-            <td>O worker faz <code>ListenAMQP</code> contra a <code>BROKER_URL</code> (fatal se vazia) e consome das filas <code>yggdrasil.adapter.&lt;tipo&gt;.describe</code> e <code>yggdrasil.adapter.&lt;tipo&gt;.execute</code>.</td>
+            <td>Opt-in. <code>YGGDRASIL_TRANSPORT=amqp</code> (or <code>rabbitmq</code>).</td>
+            <td>The worker calls <code>ListenAMQP</code> against <code>BROKER_URL</code> (fatal if empty) and consumes from the queues <code>yggdrasil.adapter.&lt;type&gt;.describe</code> and <code>yggdrasil.adapter.&lt;type&gt;.execute</code>.</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>O trabalho do adapter é o mesmo nos dois casos — o <code>Describe()</code> e o <code>Execute()</code> não sabem qual transporte os carregou. Pela mesma lógica Lego, o broker é uma escolha do operador: o adapter nunca abre conexão direta com um RabbitMQ hardcoded.</p>
+    <p>The adapter's work is the same in both cases — <code>Describe()</code> and <code>Execute()</code> don't know which transport carried them. By the same Lego logic, the broker is an operator's choice: the adapter never opens a direct connection to a hardcoded RabbitMQ.</p>
 
-    <h2 id="instalar">Instalar uma integração</h2>
-    <p>O caminho rápido é <code>yggdrasil install &lt;repo_ref&gt;</code>. A CLI busca o <code>yggdrasil-quickstart.yaml</code> do repositório, conduz você pelos inputs declarados (TUI por padrão, ou <code>--non-interactive</code> para CI) e POSTa a instalação para o core, que compila o workflow que sobe o pod e registra a instância.</p>
+    <h2 id="install">Install an integration</h2>
+    <p>The fast path is <code>yggdrasil install &lt;repo_ref&gt;</code>. The CLI fetches the repository's <code>yggdrasil-quickstart.yaml</code>, walks you through the declared inputs (TUI by default, or <code>--non-interactive</code> for CI), and POSTs the installation to the core, which compiles the workflow that brings up the pod and registers the instance.</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">terminal</span></div>
       <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> install dakasa-yggdrasil/integration-stripe
-<span class="c-dim"># pino uma versão</span>
+<span class="c-dim"># pin a version</span>
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> install dakasa-yggdrasil/integration-stripe@v2.4.0
-<span class="c-dim"># referência OCI (imagem do quickstart no registry)</span>
+<span class="c-dim"># OCI reference (the quickstart image in the registry)</span>
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> install oci://ghcr.io/dakasa-yggdrasil/integration-stripe:v2.4.0
-<span class="c-dim"># CI: sem TUI, inputs por flag</span>
+<span class="c-dim"># CI: no TUI, inputs via flags</span>
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> install dakasa-yggdrasil/integration-grafana \
     --provider grafana-runtime --non-interactive \
     --input <span class="c-str">instance_name=grafana-prod</span> --dry-run
-<span class="c-ok">✓</span> instalação compilada <span class="c-dim">(--dry-run: não despachada)</span></code></pre>
+<span class="c-ok">✓</span> installation compiled <span class="c-dim">(--dry-run: not dispatched)</span></code></pre>
     </div>
-    <p>O <code>repo_ref</code> aceita <code>owner/repo</code>, <code>owner/repo@v1.2.3</code> (ref fixada), <code>owner/repo:caminho.yaml</code> (manifesto custom) e refs <code>oci://</code> — última tag ou tag específica. Use <code>--server</code>/<code>--token</code> (ou o contexto ativo do seu login) para apontar o core; <code>--dry-run</code> pede ao servidor para compilar o workflow sem despachá-lo.</p>
+    <p>The <code>repo_ref</code> accepts <code>owner/repo</code>, <code>owner/repo@v1.2.3</code> (pinned ref), <code>owner/repo:path.yaml</code> (custom manifest), and <code>oci://</code> refs — latest or a specific tag. Use <code>--server</code>/<code>--token</code> (or your login's active context) to point at the core; <code>--dry-run</code> asks the server to compile the workflow without dispatching it.</p>
 
-    <h2 id="criar">Criar a sua</h2>
-    <p>Para escrever um novo adapter, comece pelo template oficial. A CLI clona <code>dakasa-yggdrasil/integration-template</code>, reescreve o módulo Go e o nome da integração, e deixa um esqueleto que já compila e passa nos testes:</p>
+    <h2 id="build">Build your own</h2>
+    <p>To write a new adapter, start from the official template. The CLI clones <code>dakasa-yggdrasil/integration-template</code>, rewrites the Go module and the integration name, and leaves a skeleton that already compiles and passes its tests:</p>
     <div class="codeblock">
       <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">terminal</span></div>
       <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> new integration datadog --owner acme
 <span class="c-ok">✓</span> scaffold ready
   <span class="c-dim">directory:</span> ./integration-datadog
   <span class="c-dim">module:   </span> github.com/acme/integration-datadog
-<span class="c-dim"># edite internal/adapter/spec.go e adicione as suas operações</span>
-<span class="c-dim"># adopters depois instalam com:</span>
+<span class="c-dim"># edit the spec and add your operations</span>
+<span class="c-dim"># adopters then install with:</span>
 <span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> install acme/integration-datadog</code></pre>
     </div>
-    <p>O esqueleto traz o <code>Describe()</code>/<code>Execute()</code> em <code>internal/adapter/spec.go</code>, o linter de contrato, os health endpoints e o <code>yggdrasil-quickstart.yaml</code> de instalação já fiados. Os adapters usam o <strong>SDK Go</strong> (<code>yggdrasil-sdk-go</code>) para não reimplementar o encanamento de RPC: você constrói um <code>adapter.New(...)</code>, registra os handlers <code>describe</code>/<code>execute</code>, escolhe o transporte (<code>ListenHTTP</code> ou <code>ListenAMQP</code>) e chama <code>Run</code>.</p>
-    <p>Ao desenhar capacidades, siga os prefixos canônicos. A pergunta-guia: o que estou manipulando tem identidade externa estável?</p>
+    <p>The skeleton ships with <code>Describe()</code>/<code>Execute()</code>, the contract linter, the health endpoints, and the install <code>yggdrasil-quickstart.yaml</code> already wired up. Adapters use the <strong>Go SDK</strong> (<code>yggdrasil-sdk-go</code>) so they don't reimplement the RPC plumbing: you build an <code>adapter.New(...)</code>, register the <code>describe</code>/<code>execute</code> handlers, choose the transport (<code>ListenHTTP</code> or <code>ListenAMQP</code>), and call <code>Run</code>.</p>
+    <p>When designing capabilities, follow the canonical prefixes. The guiding question: does the thing I'm manipulating have a stable external identity?</p>
     <div class="deflist">
-      <div class="deflist__row"><dt>ensure_&lt;recurso&gt;</dt><dd>Mutação idempotente. O chamador diz "quero este estado"; o adapter faz GET-então-PUT internamente, adotando o recurso se já existir. Mesma entrada → mesma saída.</dd></div>
-      <div class="deflist__row"><dt>observe_&lt;tipo&gt;</dt><dd>Leitura, sem efeito colateral. Lista recursos, opcionalmente filtrados. Busca de um só item é <code>filter={id:"..."}</code> — não existe <code>get_*</code> separado.</dd></div>
-      <div class="deflist__row"><dt>destroy_&lt;recurso&gt;</dt><dd>Remoção terminal e idempotente. 404 do provider (já removido) conta como sucesso. Toda vez que você cria um <code>ensure_*</code>, entregue o <code>destroy_*</code> par no mesmo PR.</dd></div>
+      <div class="deflist__row"><dt>ensure_&lt;resource&gt;</dt><dd>Idempotent mutation. The caller says "I want this state"; the adapter does GET-then-PUT internally, adopting the resource if it already exists. Same input → same output.</dd></div>
+      <div class="deflist__row"><dt>observe_&lt;type&gt;</dt><dd>Read, no side effect. Lists resources, optionally filtered. Fetching a single item is <code>filter={id:"..."}</code> — there is no separate <code>get_*</code>.</dd></div>
+      <div class="deflist__row"><dt>destroy_&lt;resource&gt;</dt><dd>Terminal, idempotent removal. A provider 404 (already gone) counts as success. Every time you add an <code>ensure_*</code>, ship its <code>destroy_*</code> pair in the same PR.</dd></div>
     </div>
-    <p>Toda mutação (<code>ensure_*</code> / <code>destroy_*</code>) emite um evento auditável (<code>&lt;provider&gt;.&lt;recurso&gt;.ensured</code> / <code>.destroyed</code>) — o SDK cuida disso por você quando você registra o reconciler. É o que separa "chamei a API por um wrapper" de "o Yggdrasil reconciliou o recurso e o mundo soube".</p>
+    <p>Every mutation (<code>ensure_*</code> / <code>destroy_*</code>) emits an auditable event (<code>&lt;provider&gt;.&lt;resource&gt;.ensured</code> / <code>.destroyed</code>) — the SDK handles this for you when you register the reconciler. That's what separates "I called the API through a wrapper" from "Yggdrasil reconciled the resource and the world found out."</p>
 
-    <div class="callout callout--tip">Leia o contrato canônico no <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">integration-template</a> (o <code>INTEGRATION_CONTRACT.md</code> é a lei) e o <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">yggdrasil-sdk-go</a> antes de tocar em qualquer adapter. Depois siga para <a href="surfaces.html">Surfaces</a> para ver como uma integração ganha sua própria UI interna.</div>
+    <div class="callout callout--tip">Read the canonical contract in the <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">integration-template</a> (<code>INTEGRATION_CONTRACT.md</code> is the law) and the <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">yggdrasil-sdk-go</a> before touching any adapter. Then head to <a href="surfaces.html">Surfaces</a> to see how an integration gets its own internal UI.</div>
 
-    <nav class="doc-nav" aria-label="Navegação entre conceitos">
-      <a href="identity.html"><span>← Anterior</span><strong>Identidade &amp; colaboradores</strong></a>
-      <a class="is-next" href="surfaces.html"><span>Próximo →</span><strong>Surfaces</strong></a>
+    <nav class="doc-nav" aria-label="Concept navigation">
+      <a href="identity.html"><span>← Previous</span><strong>Identity &amp; collaborators</strong></a>
+      <a class="is-next" href="surfaces.html"><span>Next →</span><strong>Surfaces</strong></a>
     </nav>
   </article>
 </div>
@@ -209,32 +209,32 @@
         <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
         <span class="brand__name">Yggdrasil</span>
       </a>
-      <p class="footer__tag">A árvore-mundo que conecta seus sistemas.<br />Open source · Apache-2.0.</p>
+      <p class="footer__tag">The world-tree that connects your systems.<br />Open source · Apache-2.0.</p>
     </div>
-    <nav class="footer__col" aria-label="Conceitos">
-      <h5>Conceitos</h5>
-      <a href="index.html">Visão geral</a>
-      <a href="manifests.html">Manifestos</a>
-      <a href="integrations.html">Integrações</a>
+    <nav class="footer__col" aria-label="Docs">
+      <h5>Docs</h5>
+      <a href="index.html">Overview</a>
+      <a href="manifests.html">Manifests</a>
+      <a href="integrations.html">Integrations</a>
       <a href="surfaces.html">Surfaces</a>
     </nav>
-    <nav class="footer__col" aria-label="Repositórios">
-      <h5>Código</h5>
+    <nav class="footer__col" aria-label="Code">
+      <h5>Code</h5>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">CLI</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">SDK (Go)</a>
-      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Template de integração</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">Go SDK</a>
+      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Integration template</a>
+      <a href="https://github.com/dakasa-yggdrasil/surface-template" target="_blank" rel="noopener">Surface template</a>
     </nav>
-    <nav class="footer__col" aria-label="Organização">
+    <nav class="footer__col" aria-label="Organization">
       <h5>Org</h5>
       <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">GitHub</a>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Releases</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">Licença</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
     </nav>
   </div>
   <div class="wrap footer__bottom">
     <span>© 2026 DaKasa · Yggdrasil</span>
-    <span>Feito para rodar na sua infra.</span>
+    <span>Built to run on your infra.</span>
   </div>
 </footer>
 

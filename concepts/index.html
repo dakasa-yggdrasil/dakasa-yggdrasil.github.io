@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Visão geral & arquitetura · Conceitos · Yggdrasil</title>
-<meta name="description" content="O que é o Yggdrasil, como o control plane se organiza (core, CLI, adapters, surfaces) e como uma requisição flui do manifesto até o seu sistema." />
+<title>Overview & architecture · Docs · Yggdrasil</title>
+<meta name="description" content="What Yggdrasil is, how the control plane is organized (core engine, CLI, adapters, surfaces) and how a request flows from a manifest to your system." />
 <link rel="icon" href="../assets/favicon-tree.png" type="image/png" />
 <meta name="theme-color" content="#0A0E0F" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="Visão geral & arquitetura · Yggdrasil" />
-<meta property="og:description" content="Como o control plane do Yggdrasil se organiza e como tudo flui do manifesto até o seu sistema." />
+<meta property="og:title" content="Overview & architecture · Yggdrasil" />
+<meta property="og:description" content="How the Yggdrasil control plane is organized and how everything flows from a manifest to your system." />
 <meta property="og:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,25 +22,25 @@
 <!-- ░░ NAV ░░ -->
 <header class="nav is-scrolled" id="nav">
   <div class="wrap nav__inner">
-    <a class="brand" href="../" aria-label="Yggdrasil — início">
+    <a class="brand" href="../" aria-label="Yggdrasil — home">
       <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
       <span class="brand__name">Yggdrasil</span>
     </a>
-    <nav class="nav__links" aria-label="Principal">
-      <a href="../">Início</a>
-      <a href="../#integrations">Integrações</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="../">Home</a>
+      <a href="../#integrations">Integrations</a>
       <a href="../#surfaces">Surfaces</a>
       <a href="../#cli">CLI</a>
-      <a href="index.html" aria-current="page">Conceitos</a>
+      <a href="index.html" aria-current="page">Docs</a>
     </nav>
     <div class="nav__cta">
-      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub da organização">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub organization">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         GitHub
       </a>
-      <a class="btn btn--solid btn--sm" href="../#start">Começar</a>
+      <a class="btn btn--solid btn--sm" href="../#start">Get started</a>
     </div>
-    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -50,88 +50,86 @@
 
   <!-- ░░ SIDEBAR ░░ -->
   <aside class="doc-side" id="docSide">
-    <button class="doc-side__toggle" aria-expanded="false">Conceitos</button>
+    <button class="doc-side__toggle" aria-expanded="false">Docs</button>
     <div class="doc-side__nav">
       <div class="doc-side__inner">
-        <p class="doc-side__group">Fundamentos</p>
-        <a href="index.html" aria-current="page">Visão geral &amp; arquitetura</a>
-        <a href="manifests.html">Manifestos</a>
+        <p class="doc-side__group">Fundamentals</p>
+        <a href="index.html" aria-current="page">Overview &amp; architecture</a>
+        <a href="manifests.html">Manifests</a>
         <a href="workflows.html">Workflows &amp; runs</a>
-        <a href="identity.html">Identidade &amp; colaboradores</a>
-        <p class="doc-side__group">Construindo</p>
-        <a href="integrations.html">Integrações</a>
+        <a href="identity.html">Identity &amp; collaborators</a>
+        <p class="doc-side__group">Building</p>
+        <a href="integrations.html">Integrations</a>
         <a href="surfaces.html">Surfaces</a>
         <a href="cli.html">CLI</a>
-        <a href="self-hosting.html">Self-hosting &amp; primeiros passos</a>
+        <a href="self-hosting.html">Self-hosting &amp; first steps</a>
       </div>
     </div>
   </aside>
 
   <!-- ░░ ARTICLE ░░ -->
   <article class="doc">
-    <p class="crumb"><a href="../">Início</a> / Conceitos / Visão geral</p>
-    <h1>Visão geral &amp; arquitetura</h1>
-    <p class="doc__lede">Yggdrasil é um <strong>control plane self-hosted</strong>: você descreve o que quer como manifestos, e ele executa — orquestrando workflows, falando com seus sistemas através de integrações plugáveis e expondo tudo por surfaces internas. Tudo roda na sua infraestrutura.</p>
+    <p class="crumb"><a href="../">Home</a> / Docs / Overview</p>
+    <h1>Overview &amp; architecture</h1>
+    <p class="doc__lede">Yggdrasil is a <strong>self-hosted control plane</strong>: you describe what you want as manifests, and it executes — orchestrating workflows, talking to your systems through pluggable integrations, and extending every edge with surfaces. It all runs on your infrastructure.</p>
 
-    <h2 id="o-que-e">O que é um control plane</h2>
-    <p>Um catálogo de developer <em>mostra</em> seus sistemas. O Yggdrasil vai além: ele <strong>opera</strong> eles. Em vez de uma camada de leitura por cima da sua infra, é o plano de controle que recebe intenções declarativas e as realiza — de forma versionada, auditável e reversível.</p>
-    <p>Pense na árvore-mundo nórdica que dá nome ao projeto: um tronco central conectando vários reinos. O Yggdrasil é esse tronco — o ponto único onde manifestos, execução, integrações e identidade se encontram, sem acoplar nenhum dos seus sistemas aos outros.</p>
+    <h2 id="what">What a control plane is</h2>
+    <p>A catalog <em>shows</em> your systems. Yggdrasil goes further: it <strong>operates</strong> them. Instead of a read-only layer over your infra, it's the control plane that takes declarative intent and makes it real — versioned, auditable and reversible.</p>
+    <p>Think of the Norse world-tree the project is named after: a single trunk connecting many realms. Yggdrasil is that trunk — the one place where manifests, execution, integrations and identity meet, without coupling any of your systems to one another.</p>
 
-    <h2 id="as-pecas">As peças</h2>
-    <p>O produto é um pequeno conjunto de componentes com papéis bem separados:</p>
+    <h2 id="pieces">The pieces</h2>
+    <p>The product is a small set of components with cleanly separated roles:</p>
     <div class="pieces">
       <div class="piece">
-        <h4>yggdrasil-core</h4>
-        <p>O servidor (Go) que tem a <strong>autoridade</strong>: guarda os manifestos versionados, executa runs, aplica auth e expõe a API HTTP. Toda decisão de negócio mora aqui.</p>
+        <h4>Core engine</h4>
+        <p>The brain with the <strong>authority</strong>: it holds your versioned manifests, runs workflows, enforces auth and exposes the API. Every business decision lives here.</p>
       </div>
       <div class="piece">
-        <h4>yggdrasil (CLI)</h4>
-        <p>O binário que você usa para dirigir o core: <code>init</code>, <code>apply</code>, <code>run</code>, <code>install</code>, <code>new</code>. Não reimplementa lógica — chama a API.</p>
+        <h4>CLI</h4>
+        <p>The binary you drive it with: <code>init</code>, <code>apply</code>, <code>run</code>, <code>install</code>, <code>new</code>. It doesn't re-implement logic — it calls the API.</p>
       </div>
       <div class="piece">
         <h4>Integration adapters</h4>
-        <p>Workers independentes (<code>integration-*</code>) que sabem falar com um sistema externo — AWS, Grafana, Stripe… Plugam no core por um contrato explícito.</p>
+        <p>Independent workers that know how to talk to one external system — AWS, Grafana, Stripe… They plug into the core through an explicit contract.</p>
       </div>
       <div class="piece">
         <h4>Surfaces</h4>
-        <p>As bordas de UI internas (<code>surface-*</code>) — o console e os painéis por integração para o seu time de plataforma, sobre um design system compartilhado.</p>
+        <p>Extension edges — a UI, an API, an MCP server, a bot — that attach to an integration or to the core engine itself.</p>
       </div>
     </div>
 
-    <h2 id="o-fluxo">O fluxo</h2>
-    <p>Uma intenção percorre sempre o mesmo caminho: você expressa, o core decide, o adapter age, o seu sistema se move.</p>
-    <div class="flow" role="img" aria-label="Fluxo: CLI e manifestos para o core, do core para os adapters, dos adapters para os seus sistemas">
-      <div class="flow__node"><span class="flow__tag">você</span><strong>CLI / Manifestos</strong><small>apply · run · install</small></div>
+    <h2 id="flow">The flow</h2>
+    <p>An intent always travels the same path: you express it, the core decides, the adapter acts, your system moves.</p>
+    <div class="flow" role="img" aria-label="Flow: CLI and manifests to the core engine, then to adapters, then to your systems">
+      <div class="flow__node"><span class="flow__tag">you</span><strong>CLI / Manifests</strong><small>apply · run · install</small></div>
       <div class="flow__arrow" aria-hidden="true">→</div>
-      <div class="flow__node flow__node--core"><span class="flow__tag">autoridade</span><strong>yggdrasil-core</strong><small>manifestos versionados · runs · auth</small></div>
+      <div class="flow__node flow__node--core"><span class="flow__tag">authority</span><strong>Core engine</strong><small>versioned manifests · runs · auth</small></div>
       <div class="flow__arrow" aria-hidden="true">→</div>
-      <div class="flow__node"><span class="flow__tag">runtime</span><strong>Integration adapters</strong><small>http_json · ou RabbitMQ</small></div>
+      <div class="flow__node"><span class="flow__tag">runtime</span><strong>Integration adapters</strong><small>HTTP · or message queue</small></div>
       <div class="flow__arrow" aria-hidden="true">→</div>
-      <div class="flow__node"><span class="flow__tag">seu mundo</span><strong>Seus sistemas</strong><small>cloud · pagamentos · obs.</small></div>
+      <div class="flow__node"><span class="flow__tag">your world</span><strong>Your systems</strong><small>cloud · payments · obs.</small></div>
     </div>
-    <p>A CLI nunca toca seus sistemas diretamente: ela fala com o core, que valida o manifesto, registra a versão e despacha o trabalho para o adapter certo. O adapter executa e devolve o resultado pelo mesmo contrato.</p>
+    <p>The CLI never touches your systems directly: it talks to the core, which validates the manifest, records the version and dispatches the work to the right adapter. The adapter executes and returns the result through the same contract.</p>
 
-    <h2 id="manifestos-no-centro">Os manifestos no centro</h2>
-    <p>Tudo no Yggdrasil é um manifesto versionado — workflows, tipos de integração, instâncias, times. Você aplica com <code>apply</code>, compara com <code>diff</code>, inspeciona com <code>get</code>/<code>describe</code> e desfaz com <code>rollback</code>. É GitOps de verdade para a operação da sua plataforma.</p>
-    <div class="callout callout--tip">Comece por <a href="manifests.html">Manifestos</a> para entender o modelo declarativo, e por <a href="workflows.html">Workflows &amp; runs</a> para ver como eles viram execução.</div>
+    <h2 id="manifests-center">Manifests at the center</h2>
+    <p>Everything in Yggdrasil is a versioned manifest — workflows, integration types, instances, teams. You create them with <code>apply</code>, compare them with <code>diff</code>, inspect them with <code>get</code>/<code>describe</code> and undo them with <code>rollback</code>. It's real GitOps for operating your platform.</p>
+    <div class="callout callout--tip">Start with <a href="manifests.html">Manifests</a> to understand the declarative model, then <a href="workflows.html">Workflows &amp; runs</a> to see how they turn into execution.</div>
 
-    <h2 id="principios">Princípios</h2>
+    <h2 id="principles">Principles</h2>
     <div class="deflist">
-      <div class="deflist__row"><dt>Self-hosted</dt><dd>Roda no seu cluster, sua VPC, seu Postgres. Nenhum dado atravessa a fronteira de um terceiro.</dd></div>
-      <div class="deflist__row"><dt>Declarativo</dt><dd>Você descreve o estado desejado; o core reconcilia. Versões e histórico saem de graça.</dd></div>
-      <div class="deflist__row"><dt>Contrato explícito</dt><dd>Cada adapter publica seu <code>Describe()</code> — capacidades, schemas e versão. O core valida antes de executar.</dd></div>
-      <div class="deflist__row"><dt>Princípio Lego</dt><dd>Integrações e surfaces são peças intercambiáveis. Troque um provider sem reescrever o workflow.</dd></div>
-      <div class="deflist__row"><dt>Autoridade no core</dt><dd>CLI e surfaces são finas. A decisão de negócio vive só no <code>yggdrasil-core</code>.</dd></div>
+      <div class="deflist__row"><dt>Self-hosted</dt><dd>Runs on your cluster, your VPC, your Postgres. No data crosses a third party's boundary.</dd></div>
+      <div class="deflist__row"><dt>Declarative</dt><dd>You describe the desired state; the core reconciles. Versions and history come for free.</dd></div>
+      <div class="deflist__row"><dt>Explicit contract</dt><dd>Every adapter publishes what it can do — capabilities, schemas and version. The core validates before it executes.</dd></div>
+      <div class="deflist__row"><dt>Lego principle</dt><dd>Integrations and surfaces are interchangeable pieces. Swap a provider without rewriting the workflow.</dd></div>
+      <div class="deflist__row"><dt>Authority in the core</dt><dd>The CLI and surfaces are thin. The business decision lives only in the core engine.</dd></div>
     </div>
 
-    <h2 id="por-onde-comecar">Por onde começar</h2>
-    <p>Se você quer pôr a mão na massa agora, vá para <a href="self-hosting.html">Self-hosting &amp; primeiros passos</a> — um <code>yggdrasil init</code> sobe Postgres, core e adapters em um comando. Se prefere entender o modelo antes, siga a ordem da barra lateral.</p>
+    <h2 id="where-to-start">Where to start</h2>
+    <p>If you want to get hands-on right now, head to <a href="self-hosting.html">Self-hosting &amp; first steps</a> — one <code>yggdrasil init</code> brings up Postgres, the core engine and adapters in a single command. If you'd rather understand the model first, follow the order in the sidebar.</p>
 
-    <div class="callout callout--note">O código é a fonte da verdade. Cada conceito aqui aponta para o repositório real em <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">github.com/dakasa-yggdrasil</a>.</div>
-
-    <nav class="doc-nav" aria-label="Navegação entre conceitos">
+    <nav class="doc-nav" aria-label="Concept navigation">
       <span class="spacer"></span>
-      <a class="is-next" href="manifests.html"><span>Próximo →</span><strong>Manifestos</strong></a>
+      <a class="is-next" href="manifests.html"><span>Next →</span><strong>Manifests</strong></a>
     </nav>
   </article>
 </div>
@@ -144,32 +142,32 @@
         <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
         <span class="brand__name">Yggdrasil</span>
       </a>
-      <p class="footer__tag">A árvore-mundo que conecta seus sistemas.<br />Open source · Apache-2.0.</p>
+      <p class="footer__tag">The world-tree that connects your systems.<br />Open source · Apache-2.0.</p>
     </div>
-    <nav class="footer__col" aria-label="Conceitos">
-      <h5>Conceitos</h5>
-      <a href="index.html">Visão geral</a>
-      <a href="manifests.html">Manifestos</a>
-      <a href="integrations.html">Integrações</a>
+    <nav class="footer__col" aria-label="Docs">
+      <h5>Docs</h5>
+      <a href="index.html">Overview</a>
+      <a href="manifests.html">Manifests</a>
+      <a href="integrations.html">Integrations</a>
       <a href="surfaces.html">Surfaces</a>
     </nav>
-    <nav class="footer__col" aria-label="Repositórios">
-      <h5>Código</h5>
+    <nav class="footer__col" aria-label="Code">
+      <h5>Code</h5>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">CLI</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">SDK (Go)</a>
-      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Template de integração</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">Go SDK</a>
+      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Integration template</a>
+      <a href="https://github.com/dakasa-yggdrasil/surface-template" target="_blank" rel="noopener">Surface template</a>
     </nav>
-    <nav class="footer__col" aria-label="Organização">
+    <nav class="footer__col" aria-label="Organization">
       <h5>Org</h5>
       <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">GitHub</a>
       <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Releases</a>
-      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">Licença</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
     </nav>
   </div>
   <div class="wrap footer__bottom">
     <span>© 2026 DaKasa · Yggdrasil</span>
-    <span>Feito para rodar na sua infra.</span>
+    <span>Built to run on your infra.</span>
   </div>
 </footer>
 
