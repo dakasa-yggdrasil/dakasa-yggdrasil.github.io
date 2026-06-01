@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Yggdrasil — o control plane self-hosted do seu stack</title>
+<meta name="description" content="Yggdrasil é o control plane self-hosted para workflows declarativos, integrações plugáveis e ciclo de vida de identidade — rodando na sua infraestrutura, sob seu controle. Open source, Apache-2.0." />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Yggdrasil — o control plane self-hosted do seu stack" />
+<meta property="og:description" content="Workflows declarativos, integrações plugáveis e uma CLI que roda o ciclo de vida todo. Na sua infra, sob seu controle." />
+<meta property="og:url" content="https://dakasa-yggdrasil.github.io/" />
+<meta property="og:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Yggdrasil — o control plane self-hosted do seu stack" />
+<meta name="twitter:description" content="Workflows declarativos, integrações plugáveis e uma CLI que roda o ciclo de vida todo." />
+<meta name="twitter:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ░░ NAV ░░ -->
+<header class="nav" id="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#top" aria-label="Yggdrasil — início">
+      <svg class="brand__mark" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+        <defs>
+          <linearGradient id="g-brand" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#34D399"/><stop offset=".5" stop-color="#2DD4BF"/><stop offset="1" stop-color="#A78BFA"/>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="url(#g-brand)" stroke-width="1.6" stroke-linecap="round">
+          <path d="M16 4v24"/>
+          <path d="M16 11l-6-4M16 11l6-4M16 17l-7 4M16 17l7 4"/>
+          <path d="M16 28c-3 0-5-2-7-3M16 28c3 0 5-2 7-3"/>
+        </g>
+        <g fill="url(#g-brand)">
+          <circle cx="16" cy="4" r="2.1"/><circle cx="10" cy="7" r="1.7"/><circle cx="22" cy="7" r="1.7"/>
+          <circle cx="9" cy="21" r="1.7"/><circle cx="23" cy="21" r="1.7"/><circle cx="16" cy="17" r="1.9"/>
+        </g>
+      </svg>
+      <span class="brand__name">Yggdrasil</span>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#what">O que é</a>
+      <a href="#how">Como funciona</a>
+      <a href="#integrations">Integrações</a>
+      <a href="#cli">CLI</a>
+      <a href="#compare">Por quê</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">Docs</a>
+    </nav>
+    <div class="nav__cta">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub da organização">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a class="btn btn--solid btn--sm" href="#start">Começar</a>
+    </div>
+    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ░░ HERO ░░ -->
+<section class="hero">
+  <canvas class="hero__canvas" id="tree" aria-hidden="true"></canvas>
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+    <a class="pill" href="#integrations">
+      <span class="pill__dot"></span> Open source · Apache-2.0 · self-hosted
+    </a>
+    <h1 class="hero__title">
+      O control plane self-hosted<br />do seu stack inteiro.
+    </h1>
+    <p class="hero__sub">
+      Workflows declarativos, integrações plugáveis e uma CLI que roda o ciclo de vida todo —
+      <strong>na sua infraestrutura, sob o seu controle.</strong>
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--solid" href="#start">Começar agora</a>
+      <a class="btn btn--ghost" href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        Star no GitHub
+      </a>
+    </div>
+
+    <div class="terminal" role="group" aria-label="Bootstrap em um comando">
+      <div class="terminal__bar">
+        <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
+        <span class="terminal__title">bash</span>
+        <button class="copy" data-copy="yggdrasil init" aria-label="Copiar comando">Copiar</button>
+      </div>
+      <pre class="terminal__body"><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> init
+<span class="c-ok">✓</span> Postgres provisionado
+<span class="c-ok">✓</span> yggdrasil-core no ar  <span class="c-dim">:8080</span>
+<span class="c-ok">✓</span> adapters registrados
+<span class="c-dim">control plane de pé. próximo:</span> <span class="c-cmd">yggdrasil apply -f workflow.yaml</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ POSITIONING ░░ -->
+<section class="position">
+  <div class="wrap">
+    <p class="position__line">
+      Um portal de developer <em>mostra</em> seu software.
+      <span class="position__hi">O Yggdrasil <strong>opera</strong> ele.</span>
+    </p>
+    <p class="position__note">Não é um catálogo bonito por cima dos seus sistemas. É o plano de controle que <em>executa</em> — declarativo, versionado e auditável.</p>
+  </div>
+</section>
+
+<!-- ░░ WHAT IT IS — PILLARS ░░ -->
+<section class="section" id="what">
+  <div class="wrap">
+    <header class="section__head">
+      <span class="kicker">O que é</span>
+      <h2>Quatro capacidades, um plano de controle.</h2>
+      <p class="lede">Tudo é manifesto. Tudo é versionado. Tudo roda na sua infra.</p>
+    </header>
+    <div class="grid grid--4">
+      <article class="card">
+        <div class="card__icon" data-i="manifest"></div>
+        <h3>Manifest-first</h3>
+        <p>Descreva workflows, integrações e times como manifestos versionados. <code>apply</code>, <code>diff</code>, <code>rollback</code> — GitOps de verdade, com histórico e dry-run.</p>
+      </article>
+      <article class="card">
+        <div class="card__icon" data-i="run"></div>
+        <h3>Execução de workflows</h3>
+        <p>Dispare e acompanhe runs (<code>run</code>, <code>ops</code>, <code>logs</code>). Reactors reagem a eventos do seu domínio. O orquestrador faz o trabalho — não só desenha o diagrama.</p>
+      </article>
+      <article class="card">
+        <div class="card__icon" data-i="plug"></div>
+        <h3>Integrações plugáveis</h3>
+        <p>Adapters instaláveis no modelo família → tipo → instância. <code>yggdrasil install &lt;repo&gt;</code> e o sistema novo fala com todos os outros.</p>
+      </article>
+      <article class="card">
+        <div class="card__icon" data-i="id"></div>
+        <h3>Identidade &amp; workforce</h3>
+        <p>Auth de primeira classe via Heimdall: login com MFA (TOTP/recovery), collaborators, times e grants — o ciclo de vida de pessoas embutido, não terceirizado.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ HOW IT WORKS ░░ -->
+<section class="section section--alt" id="how">
+  <div class="wrap">
+    <header class="section__head">
+      <span class="kicker">Como funciona</span>
+      <h2>Manifestos entram. O mundo real se move.</h2>
+      <p class="lede">A CLI dirige; o core tem a autoridade; os adapters tocam seus sistemas.</p>
+    </header>
+
+    <div class="flow" role="img" aria-label="Fluxo: CLI e manifestos para o core, do core para os adapters, dos adapters para os seus sistemas">
+      <div class="flow__node">
+        <span class="flow__tag">você</span>
+        <strong>CLI / Manifestos</strong>
+        <small>apply · run · install</small>
+      </div>
+      <div class="flow__arrow" aria-hidden="true">→</div>
+      <div class="flow__node flow__node--core">
+        <span class="flow__tag">autoridade</span>
+        <strong>yggdrasil-core</strong>
+        <small>manifestos versionados · runs · auth</small>
+      </div>
+      <div class="flow__arrow" aria-hidden="true">→</div>
+      <div class="flow__node">
+        <span class="flow__tag">runtime</span>
+        <strong>Integration adapters</strong>
+        <small>http_json · ou RabbitMQ</small>
+      </div>
+      <div class="flow__arrow" aria-hidden="true">→</div>
+      <div class="flow__node">
+        <span class="flow__tag">seu mundo</span>
+        <strong>Seus sistemas</strong>
+        <small>cloud · pagamentos · observabilidade</small>
+      </div>
+    </div>
+
+    <div class="how__points">
+      <div class="how__point"><span class="how__num">01</span><p><strong>Self-hosted por construção.</strong> <code>yggdrasil init</code> sobe Postgres + core + adapters no seu cluster. Nada sai da sua fronteira.</p></div>
+      <div class="how__point"><span class="how__num">02</span><p><strong>Contrato explícito.</strong> Cada adapter publica seu <code>Describe()</code> — capacidades, schemas e versão. O core valida antes de executar.</p></div>
+      <div class="how__point"><span class="how__num">03</span><p><strong>Transporte à sua escolha.</strong> HTTP por padrão; RabbitMQ/AMQP quando você precisa de fila. O mesmo adapter, sem reescrever.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ INTEGRATIONS ░░ -->
+<section class="section" id="integrations">
+  <div class="wrap">
+    <header class="section__head">
+      <span class="kicker">Ecossistema</span>
+      <h2>18 integrações. Um comando cada.</h2>
+      <p class="lede">Cloud, observabilidade, pagamentos, comunicação, dados — instale o que precisar e componha como Lego. E o catálogo está crescendo.</p>
+    </header>
+
+    <div class="install-strip">
+      <code><span class="c-prompt">$</span> yggdrasil install dakasa-yggdrasil/integration-grafana</code>
+      <button class="copy copy--inline" data-copy="yggdrasil install dakasa-yggdrasil/integration-grafana" aria-label="Copiar comando">Copiar</button>
+    </div>
+
+    <div class="cat">
+      <div class="cat__group">
+        <h4 class="cat__title">Cloud &amp; Infra</h4>
+        <div class="chips">
+          <span class="chip" data-c="cloud"><b>AWS</b><small>secrets · recursos</small></span>
+          <span class="chip" data-c="cloud"><b>GCP</b><small>secret manager</small></span>
+          <span class="chip" data-c="cloud"><b>Kubernetes</b><small>workloads</small></span>
+        </div>
+      </div>
+      <div class="cat__group">
+        <h4 class="cat__title">Observabilidade</h4>
+        <div class="chips">
+          <span class="chip" data-c="obs"><b>Grafana</b><small>dashboards</small></span>
+          <span class="chip" data-c="obs"><b>Loki</b><small>logs (LogQL)</small></span>
+          <span class="chip" data-c="obs"><b>Prometheus</b><small>métricas</small></span>
+        </div>
+      </div>
+      <div class="cat__group">
+        <h4 class="cat__title">Pagamentos</h4>
+        <div class="chips">
+          <span class="chip" data-c="pay"><b>Stripe</b><small>cobranças globais</small></span>
+          <span class="chip" data-c="pay"><b>EFI Pix</b><small>Pix / BACEN</small></span>
+          <span class="chip" data-c="pay"><b>NFe.io</b><small>NFSe fiscal</small></span>
+        </div>
+      </div>
+      <div class="cat__group">
+        <h4 class="cat__title">Comunicação &amp; Workforce</h4>
+        <div class="chips">
+          <span class="chip" data-c="comm"><b>Slack</b><small>reactors · notif.</small></span>
+          <span class="chip" data-c="comm"><b>Google Workspace</b><small>diretório</small></span>
+          <span class="chip" data-c="comm"><b>GitHub</b><small>repos · deploy</small></span>
+        </div>
+      </div>
+      <div class="cat__group">
+        <h4 class="cat__title">Dados &amp; Plataforma</h4>
+        <div class="chips">
+          <span class="chip" data-c="data"><b>database-admin</b><small>postgres-plane</small></span>
+          <span class="chip" data-c="data"><b>schema-migrations</b><small>goose</small></span>
+          <span class="chip" data-c="data"><b>secrets-management</b><small>aws · gcp</small></span>
+          <span class="chip" data-c="data"><b>RabbitMQ</b><small>topologia · runtime</small></span>
+          <span class="chip" data-c="data"><b>Heimdall</b><small>auth / identidade</small></span>
+          <span class="chip" data-c="data"><b>yggdrasil-self</b><small>o core via API</small></span>
+        </div>
+      </div>
+    </div>
+    <p class="cat__foot">Falta a sua? O contrato de integração é público e há um <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">template oficial</a> — <code>yggdrasil new integration &lt;nome&gt;</code> e você tem um adapter de pé.</p>
+  </div>
+</section>
+
+<!-- ░░ CLI ░░ -->
+<section class="section section--alt" id="cli">
+  <div class="wrap cli__wrap">
+    <div class="cli__copy">
+      <span class="kicker">A linha de comando</span>
+      <h2>Um binário. O ciclo de vida inteiro.</h2>
+      <p class="lede">Sem clicar em dez telas. Do bootstrap ao rollback, tudo na CLI — scriptável, versionável, auditável.</p>
+      <ul class="cli__list">
+        <li><code>init</code> · <code>login --totp</code> — sobe e autentica (com MFA)</li>
+        <li><code>apply</code> · <code>diff</code> · <code>get</code> · <code>describe</code> — manifestos</li>
+        <li><code>run</code> · <code>ops</code> · <code>logs</code> — execução e observação</li>
+        <li><code>rollback</code> · <code>delete</code> — desfaça com segurança</li>
+        <li><code>install</code> · <code>new</code> — ecossistema e scaffolding</li>
+        <li><code>update</code> — a própria CLI se atualiza</li>
+      </ul>
+    </div>
+    <div class="terminal terminal--tall">
+      <div class="terminal__bar">
+        <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
+        <span class="terminal__title">~/infra</span>
+      </div>
+      <pre class="terminal__body"><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> login --server https://cp.acme.dev --totp 481920
+<span class="c-ok">✓</span> sessão ativa como <span class="c-str">giovanni</span>
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> apply -f onboarding.yaml --dry-run
+<span class="c-dim">~ workflow/onboarding</span>  <span class="c-y">v3 → v4</span>  <span class="c-ok">(sem efeitos)</span>
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> run onboarding --input user=ana
+<span class="c-ok">▸</span> run <span class="c-str">r-9f2a</span> despachado
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> ops get r-9f2a
+<span class="c-ok">●</span> succeeded  <span class="c-dim">· 6 passos · 2.1s</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ WHY / COMPARE ░░ -->
+<section class="section" id="compare">
+  <div class="wrap">
+    <header class="section__head">
+      <span class="kicker">Por que Yggdrasil</span>
+      <h2>Inspirado no Backstage. Vai além dele.</h2>
+      <p class="lede">Adoramos um bom portal de developer. Mas catalogar seus sistemas é metade do problema — a outra metade é <em>operá-los</em>.</p>
+    </header>
+
+    <div class="table-wrap">
+      <table class="compare">
+        <thead>
+          <tr><th scope="col">Capacidade</th><th scope="col" class="is-us">Yggdrasil</th><th scope="col">Portal de dev clássico</th><th scope="col">SaaS fechado</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Self-hosted, seus dados na sua fronteira</th><td class="is-us"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">✗</span></td></tr>
+          <tr><th scope="row">Executa workflows (não só cataloga)</th><td class="is-us"><span class="yes">✓</span></td><td><span class="mid">parcial</span></td><td><span class="mid">varia</span></td></tr>
+          <tr><th scope="row">Runtime de integração (instala adapters)</th><td class="is-us"><span class="yes">✓</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><th scope="row">Manifestos declarativos + versionamento</th><td class="is-us"><span class="yes">✓</span></td><td><span class="mid">parcial</span></td><td><span class="no">✗</span></td></tr>
+          <tr><th scope="row">Identidade &amp; workforce embutidos (MFA, times)</th><td class="is-us"><span class="yes">✓</span></td><td><span class="no">externo</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><th scope="row">CLI de ciclo de vida completo</th><td class="is-us"><span class="yes">✓</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td></tr>
+          <tr><th scope="row">Licença permissiva (Apache-2.0)</th><td class="is-us"><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">✗</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="value">
+      <div class="value__item"><h4>Soberania</h4><p>Roda no seu Kubernetes, sua VPC, seu Postgres. Nenhum dado de cliente atravessa a fronteira de um terceiro.</p></div>
+      <div class="value__item"><h4>Sem lock-in</h4><p>Apache-2.0, sem cobrança por assento. O contrato é aberto; você estende sem pedir licença a ninguém.</p></div>
+      <div class="value__item"><h4>Escala com você</h4><p>De um <code>init</code> local a um control plane multi-time com filas, reactors e dezenas de integrações.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ START / CTA ░░ -->
+<section class="cta" id="start">
+  <div class="wrap cta__inner">
+    <h2 class="cta__title">Suba seu control plane em um comando.</h2>
+    <p class="cta__sub">Sem cadastro. Sem cartão. Só o seu cluster e a CLI.</p>
+    <div class="terminal terminal--cta">
+      <div class="terminal__bar">
+        <span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span>
+        <span class="terminal__title">começar</span>
+        <button class="copy" data-copy="yggdrasil init" aria-label="Copiar comando">Copiar</button>
+      </div>
+      <pre class="terminal__body"><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> init        <span class="c-dim"># standalone</span>
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> init --server https://cp.acme.dev   <span class="c-dim"># conectar</span></code></pre>
+    </div>
+    <div class="cta__actions">
+      <a class="btn btn--solid" href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">Ler a documentação</a>
+      <a class="btn btn--ghost" href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Baixar a CLI</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <a class="brand" href="#top">
+        <svg class="brand__mark" viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
+          <g fill="none" stroke="url(#g-brand)" stroke-width="1.6" stroke-linecap="round">
+            <path d="M16 4v24"/><path d="M16 11l-6-4M16 11l6-4M16 17l-7 4M16 17l7 4"/><path d="M16 28c-3 0-5-2-7-3M16 28c3 0 5-2 7-3"/>
+          </g>
+          <g fill="url(#g-brand)"><circle cx="16" cy="4" r="2.1"/><circle cx="10" cy="7" r="1.7"/><circle cx="22" cy="7" r="1.7"/><circle cx="9" cy="21" r="1.7"/><circle cx="23" cy="21" r="1.7"/><circle cx="16" cy="17" r="1.9"/></g>
+        </svg>
+        <span class="brand__name">Yggdrasil</span>
+      </a>
+      <p class="footer__tag">A árvore-mundo que conecta seus sistemas.<br />Open source · Apache-2.0.</p>
+    </div>
+    <nav class="footer__col" aria-label="Produto">
+      <h5>Produto</h5>
+      <a href="#what">O que é</a>
+      <a href="#how">Como funciona</a>
+      <a href="#integrations">Integrações</a>
+      <a href="#cli">CLI</a>
+    </nav>
+    <nav class="footer__col" aria-label="Repositórios">
+      <h5>Código</h5>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">CLI</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">SDK (Go)</a>
+      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Template de integração</a>
+    </nav>
+    <nav class="footer__col" aria-label="Organização">
+      <h5>Org</h5>
+      <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">Licença</a>
+    </nav>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>© 2026 DaKasa · Yggdrasil</span>
+    <span>Feito para rodar na sua infra.</span>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>
