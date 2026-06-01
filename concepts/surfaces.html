@@ -87,7 +87,7 @@
       <li><strong>Stateless as to business state</strong> — a surface doesn't <em>own</em> business state. Session-level UX state (form drafts, expanded panels, an observation cache) is fine; business state lives in the integrations and backends.</li>
       <li><strong>Auth via the platform session (delegated)</strong> — never reimplement login from scratch. Public surfaces use reduced-scope, read-only platform tokens; private ones use the full session.</li>
       <li><strong>Backend-agnostic (via the core)</strong> — it calls <code>/api/v1/*</code> to read data and dispatches workflows for mutations. It doesn't talk directly to Stripe/AWS/GitHub — that goes through the integrations.</li>
-      <li><strong>Multi-tenant aware</strong> — it respects the <code>integration_instance</code> scope. Operator Acme sees Acme's resources; DaKasa sees DaKasa's. Cross-tenant visibility requires an explicit RBAC grant.</li>
+      <li><strong>Multi-tenant aware</strong> — it respects the <code>integration_instance</code> scope. Operator Acme sees Acme's resources; Globex sees Globex's. Cross-tenant visibility requires an explicit RBAC grant.</li>
       <li><strong>Federable (deployable)</strong> — it's a standalone container/binary that plugs into the console (or runs standalone for public variants). It doesn't need any central codebase to build.</li>
       <li><strong>No business authority</strong> — a surface dispatches, visualizes, composes. It does <em>not</em> decide business rules ("who to charge", "when to refund", "is action X allowed"). Those decisions live in the integrations, the workflows or backends with the proper authority.</li>
     </ol>
@@ -173,7 +173,7 @@
     </nav>
   </div>
   <div class="wrap footer__bottom">
-    <span>© 2026 DaKasa · Yggdrasil</span>
+    <span>© 2026 Yggdrasil</span>
     <span>Built to run on your infra.</span>
   </div>
 </footer>
