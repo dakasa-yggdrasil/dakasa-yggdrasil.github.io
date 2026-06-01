@@ -23,6 +23,16 @@
     });
   }
 
+  /* ── Docs sidebar toggle (mobile) ────────────────────── */
+  var docSide = document.querySelector(".doc-side");
+  var docToggle = document.querySelector(".doc-side__toggle");
+  if (docSide && docToggle) {
+    docToggle.addEventListener("click", function () {
+      var open = docSide.classList.toggle("is-open");
+      docToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
   /* ── Copy-to-clipboard buttons ───────────────────────── */
   document.querySelectorAll(".copy").forEach(function (btn) {
     btn.addEventListener("click", function () {

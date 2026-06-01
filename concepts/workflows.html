@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Workflows &amp; runs · Conceitos · Yggdrasil</title>
+<meta name="description" content="Como workflows declarativos viram execução real: anatomia de um workflow (steps e inputs), o despacho de um run, o ciclo de vida dos estados, inspeção via CLI e reactors disparados por eventos do domínio." />
+<link rel="icon" href="../assets/favicon-tree.png" type="image/png" />
+<meta name="theme-color" content="#0A0E0F" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Workflows &amp; runs · Yggdrasil" />
+<meta property="og:description" content="Workflows declarativos viram runs: steps, inputs, despacho, ciclo de vida dos estados, inspeção via CLI e reactors disparados por eventos." />
+<meta property="og:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="concepts.css" />
+</head>
+<body>
+
+<!-- ░░ NAV ░░ -->
+<header class="nav is-scrolled" id="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="Yggdrasil — início">
+      <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
+      <span class="brand__name">Yggdrasil</span>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="../">Início</a>
+      <a href="../#integrations">Integrações</a>
+      <a href="../#surfaces">Surfaces</a>
+      <a href="../#cli">CLI</a>
+      <a href="index.html" aria-current="page">Conceitos</a>
+    </nav>
+    <div class="nav__cta">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub da organização">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a class="btn btn--solid btn--sm" href="../#start">Começar</a>
+    </div>
+    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="doc-shell">
+
+  <!-- ░░ SIDEBAR ░░ -->
+  <aside class="doc-side" id="docSide">
+    <button class="doc-side__toggle" aria-expanded="false">Workflows &amp; runs</button>
+    <div class="doc-side__nav">
+      <div class="doc-side__inner">
+        <p class="doc-side__group">Fundamentos</p>
+        <a href="index.html">Visão geral &amp; arquitetura</a>
+        <a href="manifests.html">Manifestos</a>
+        <a href="workflows.html" aria-current="page">Workflows &amp; runs</a>
+        <a href="identity.html">Identidade &amp; colaboradores</a>
+        <p class="doc-side__group">Construindo</p>
+        <a href="integrations.html">Integrações</a>
+        <a href="surfaces.html">Surfaces</a>
+        <a href="cli.html">CLI</a>
+        <a href="self-hosting.html">Self-hosting &amp; primeiros passos</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ░░ ARTICLE ░░ -->
+  <article class="doc">
+    <p class="crumb"><a href="../">Início</a> / Conceitos / Workflows &amp; runs</p>
+    <h1>Workflows &amp; runs</h1>
+    <p class="doc__lede">Um <strong>workflow</strong> é um manifesto: você declara, em ordem, os passos que uma intenção deve percorrer. Quando você o dispara, o core instancia um <strong>run</strong> — uma execução concreta, com estado, histórico passo a passo e um identificador para inspecionar. O workflow é a receita; o run é o prato que saiu do forno.</p>
+
+    <h2 id="anatomia">Anatomia de um workflow</h2>
+    <p>O <code>spec</code> de um workflow tem quatro peças principais: um <code>trigger</code> (como ele pode ser iniciado — <code>manual</code>, <code>schedule</code> ou <code>event</code>), um <code>input_schema</code> (os inputs que ele aceita, com tipos e campos obrigatórios), <code>defaults</code> (valores aplicados quando o input não vem) e uma lista ordenada de <code>steps</code>.</p>
+    <p>Cada <strong>step</strong> tem um <code>id</code>, um bloco <code>use</code> que diz <em>o que aquele passo dispara</em>, e um <code>with</code> com os argumentos. O <code>use.kind</code> escolhe o tipo de passo:</p>
+    <div class="deflist">
+      <div class="deflist__row"><dt>integration</dt><dd>Despacha uma <em>operação</em> para uma integração. Você resolve o alvo por <code>family</code> + <code>operation</code> (resolução por contrato), ou fixa uma instância com <code>instance_ref</code>, ou desempata com <code>provider_ref</code>.</dd></div>
+      <div class="deflist__row"><dt>product</dt><dd>Roda uma operação de produto (<code>materialize</code>, <code>installation.apply</code>, <code>installation.observe</code>…) a partir de um <code>with.product_ref</code>.</dd></div>
+      <div class="deflist__row"><dt>yggdrasil</dt><dd>Executa em processo no próprio core, sem adapter — por exemplo <code>apply_manifest</code> para persistir um manifesto carregado em <code>with.manifest</code>.</dd></div>
+    </div>
+    <p>Steps podem encadear: <code>depends_on</code> impõe ordem, <code>condition</code> decide se o passo roda (um passo cuja condição é falsa fica <code>skipped</code>), <code>retry</code> configura <code>max_attempts</code>/<code>backoff_seconds</code>, <code>timeout_seconds</code> limita a duração e <code>for_each</code> fan-out o passo sobre uma lista. Valores fluem entre passos por templates — <code>{{ inputs.x }}</code> e <code>{{ steps.y.metadata.z }}</code>.</p>
+
+    <div class="codeblock">
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">deploy-service.yaml</span></div>
+      <pre><code><span class="t-key">trigger:</span>
+  <span class="t-key">mode:</span> <span class="t-str">manual</span>
+<span class="t-key">dispatch_mode:</span> <span class="t-str">async</span>      <span class="t-com"># orçamento de tempo &gt; timeout do gateway</span>
+<span class="t-key">input_schema:</span>
+  <span class="t-key">required:</span> [<span class="t-str">image_repo</span>, <span class="t-str">image_tag</span>]
+  <span class="t-key">properties:</span>
+    <span class="t-key">image_repo:</span> { <span class="t-key">type:</span> <span class="t-str">string</span>, <span class="t-key">minLength:</span> <span class="t-num">1</span> }
+    <span class="t-key">image_tag:</span>  { <span class="t-key">type:</span> <span class="t-str">string</span>, <span class="t-key">minLength:</span> <span class="t-num">1</span> }
+<span class="t-key">steps:</span>
+  <span class="t-key">- id:</span> <span class="t-str">render-overrides</span>
+    <span class="t-key">use:</span> { <span class="t-key">kind:</span> <span class="t-str">yggdrasil</span>, <span class="t-key">operation:</span> <span class="t-str">control_plane.render</span> }
+    <span class="t-key">with:</span>
+      <span class="t-key">control_plane_ref:</span> <span class="t-str">"payments-api"</span>
+  <span class="t-key">- id:</span> <span class="t-str">apply</span>
+    <span class="t-key">depends_on:</span> [<span class="t-str">render-overrides</span>]
+    <span class="t-key">use:</span>
+      <span class="t-key">kind:</span> <span class="t-str">integration</span>
+      <span class="t-key">family:</span> <span class="t-str">gitops</span>
+      <span class="t-key">operation:</span> <span class="t-str">ensure_kustomize_source</span>
+    <span class="t-key">with:</span>
+      <span class="t-key">image_repo:</span> <span class="t-str">"{{ inputs.image_repo }}"</span>
+      <span class="t-key">image_tag:</span>  <span class="t-str">"{{ inputs.image_tag }}"</span>
+    <span class="t-key">retry:</span> { <span class="t-key">max_attempts:</span> <span class="t-num">3</span>, <span class="t-key">backoff_seconds:</span> <span class="t-num">10</span> }
+    <span class="t-key">timeout_seconds:</span> <span class="t-num">180</span></code></pre>
+    </div>
+
+    <h2 id="despachar">Despachar um run</h2>
+    <p>Você dispara um workflow pelo nome com <code>yggdrasil run</code>. Os inputs vão como pares <code>--input chave=valor</code> (repetível); os tipos são coagidos pelo <code>input_schema</code> no servidor, então a CLI sempre envia strings. Por padrão o run é <strong>síncrono</strong> — a CLI bloqueia e imprime o progresso passo a passo. Com <code>--async</code>, o core devolve um <code>run id</code> na hora e roda o workflow em segundo plano.</p>
+    <div class="codeblock">
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">terminal</span></div>
+      <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> run deploy-service \
+    --input <span class="c-str">image_repo=registry.example/payments-api</span> \
+    --input <span class="c-str">image_tag=v1.8.3</span>
+<span class="c-ok">✓</span> render-overrides [succeeded] control_plane.render
+<span class="c-ok">✓</span> apply [succeeded] ensure_kustomize_source
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> run deploy-service --async \
+    --input <span class="c-str">image_repo=registry.example/payments-api</span> --input <span class="c-str">image_tag=v1.8.3</span>
+<span class="c-ok">✓</span> dispatched global/deploy-service (run 9f3c…e21, status pending)
+  <span class="c-dim">follow: yggdrasil logs 9f3c…e21   |   yggdrasil ops get 9f3c…e21</span></code></pre>
+    </div>
+    <p>Use <code>-n</code>/<code>--namespace</code> para mirar um namespace que não seja <code>global</code>. Workflows cujo orçamento de passos passa do timeout do gateway (≈30s) devem declarar <code>dispatch_mode: async</code> no manifesto, para que mesmo um <code>run</code> sem <code>--async</code> retorne um <code>run id</code> em vez de estourar o gateway.</p>
+
+    <h2 id="ciclo-de-vida">Ciclo de vida de um run</h2>
+    <p>Um run async nasce <code>pending</code>, passa a <code>running</code> quando a execução começa, e termina em um estado terminal — <code>succeeded</code> ou <code>failed</code>. Um run abortado vira <code>cancelled</code>. Esses são exatamente os estados que o registro <code>workflow_runs</code> aceita no core.</p>
+    <div class="flow" role="img" aria-label="Estados de um run: pending para running, de running para succeeded ou failed; abort leva a cancelled">
+      <div class="flow__node"><span class="flow__tag">início</span><strong>pending</strong><small>run registrado</small></div>
+      <div class="flow__arrow" aria-hidden="true">→</div>
+      <div class="flow__node flow__node--core"><span class="flow__tag">em execução</span><strong>running</strong><small>passos rodando</small></div>
+      <div class="flow__arrow" aria-hidden="true">→</div>
+      <div class="flow__node"><span class="flow__tag">terminal</span><strong>succeeded</strong><small>ou failed</small></div>
+    </div>
+    <p>Dois detalhes úteis: o status <code>committed</code> é tratado como sucesso terminal (equivalente a <code>succeeded</code>); e a <em>superfície de ops</em> renomeia alguns estados na hora de exibir — <code>pending</code> vira <strong>scheduled</strong>, <code>running</code> vira <strong>active</strong> e <code>cancelled</code> vira <strong>aborted</strong>. Dentro de um run, cada step também tem seu próprio status: <code>succeeded</code>, <code>failed</code> ou <code>skipped</code> (quando a <code>condition</code> resolveu para falso).</p>
+    <div class="callout callout--note">Os filtros de <code>ops list</code> entendem tanto os nomes do banco quanto os exibidos: <code>--status active</code> casa com <code>running</code>, <code>--status scheduled</code> com <code>pending</code> e <code>--status aborted</code> com <code>cancelled</code>.</div>
+
+    <h2 id="inspecionar">Inspecionar &amp; gerenciar</h2>
+    <p>A família <code>yggdrasil ops</code> é a visão operacional dos runs. <code>logs</code> faz o streaming de um run específico até ele terminar.</p>
+    <div class="deflist">
+      <div class="deflist__row"><dt>ops list</dt><dd>Lista runs. Filtros: <code>--status</code> (repetível), <code>--integration</code>, <code>--search</code>, <code>--limit</code>; saída <code>-o table|json</code>.</dd></div>
+      <div class="deflist__row"><dt>ops get &lt;run-id&gt;</dt><dd>Detalhe de um run — passos, resultados, erros. Saída <code>-o yaml|json</code>.</dd></div>
+      <div class="deflist__row"><dt>ops retry &lt;run-id&gt;</dt><dd>Reexecuta um run; aceita <code>--reason</code> para registrar a trilha de auditoria. Devolve um novo run id.</dd></div>
+      <div class="deflist__row"><dt>ops abort &lt;run-id&gt;</dt><dd>Marca um run em andamento como <code>cancelled</code> (exibido como <em>aborted</em>).</dd></div>
+      <div class="deflist__row"><dt>ops replay &lt;run-id&gt;</dt><dd>Reexecuta a partir de um run anterior, opcionalmente com novos inputs.</dd></div>
+      <div class="deflist__row"><dt>logs &lt;run-id&gt;</dt><dd>Acompanha as transições de status dos passos até o run chegar a um estado terminal — o mesmo feel de <code>kubectl logs -f</code> para um run pontual.</dd></div>
+    </div>
+    <div class="codeblock">
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">terminal</span></div>
+      <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> ops list --status active --integration gitops
+RUN_ID    STATUS  WORKFLOW         INTEGRATION  TRIGGER
+9f3c…e21  active  deploy-service   gitops       manual
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> logs 9f3c…e21
+<span class="c-ok">✓</span> render-overrides [succeeded] control_plane.render
+<span class="c-y">→</span> apply [running] ensure_kustomize_source
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> ops retry 9f3c…e21 --reason <span class="c-str">"tag corrigida"</span>
+<span class="c-ok">✓</span> retry 9f3c…e21 → new run 4b7a…c90</code></pre>
+    </div>
+
+    <h2 id="reactors">Reactors</h2>
+    <p>Nem todo run é despachado à mão. Um <strong>reactor</strong> liga um <em>evento do domínio</em> a uma capacidade de integração: a declaração diz, em essência, <em>"quando o evento X acontecer no core, chame a minha capacidade Y"</em>. Reactors são declarados no manifesto de um <code>integration_type</code>, num bloco <code>reactors</code> — cada entrada amarra um <code>event_type</code> (do catálogo canônico de eventos de ciclo de vida, como <code>collaborator.created</code> ou <code>team_membership.added</code>) a uma <code>capability</code> que precisa existir no <code>action_catalog</code> daquele tipo.</p>
+    <p>O mecanismo é desacoplado e durável. Quando um evento canônico é registrado, o core materializa uma <em>reação</em> pendente por integração interessada. Um dispatcher em segundo plano reivindica essas reações em lote e chama a capacidade do adapter, injetando um bloco <code>_context</code> com <code>event_id</code> e <code>attempt</code> para idempotência. Cada reação tem seu próprio ciclo: <code>pending</code> → <code>in_progress</code> → <code>succeeded</code> ou <code>failed</code>, e vai para <code>dead_lettered</code> depois de esgotar as tentativas.</p>
+    <div class="callout callout--tip">Workflows com <code>trigger.mode: event</code> reagem ao mesmo fluxo de eventos por outro caminho: em vez de chamar uma capacidade de adapter, eles disparam um <em>run</em> inteiro quando eventos casam com os <code>types</code> e <code>payload_filters</code> declarados — com <code>debounce</code> para consolidar rajadas.</div>
+
+    <div class="callout">Os <a href="manifests.html">manifestos</a> são o ponto de partida — um workflow é só mais um manifesto versionado. E quem realmente executa cada passo de tipo <code>integration</code> são os adapters: continue em <a href="integrations.html">Integrações</a> para ver como uma capacidade vira uma chamada ao seu sistema.</div>
+
+    <nav class="doc-nav" aria-label="Navegação entre conceitos">
+      <a href="manifests.html"><span>← Anterior</span><strong>Manifestos</strong></a>
+      <a class="is-next" href="identity.html"><span>Próximo →</span><strong>Identidade &amp; colaboradores</strong></a>
+    </nav>
+  </article>
+</div>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <a class="brand" href="../">
+        <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
+        <span class="brand__name">Yggdrasil</span>
+      </a>
+      <p class="footer__tag">A árvore-mundo que conecta seus sistemas.<br />Open source · Apache-2.0.</p>
+    </div>
+    <nav class="footer__col" aria-label="Conceitos">
+      <h5>Conceitos</h5>
+      <a href="index.html">Visão geral</a>
+      <a href="manifests.html">Manifestos</a>
+      <a href="integrations.html">Integrações</a>
+      <a href="surfaces.html">Surfaces</a>
+    </nav>
+    <nav class="footer__col" aria-label="Repositórios">
+      <h5>Código</h5>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">CLI</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">SDK (Go)</a>
+      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Template de integração</a>
+    </nav>
+    <nav class="footer__col" aria-label="Organização">
+      <h5>Org</h5>
+      <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">Licença</a>
+    </nav>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>© 2026 DaKasa · Yggdrasil</span>
+    <span>Feito para rodar na sua infra.</span>
+  </div>
+</footer>
+
+<script src="../main.js" defer></script>
+</body>
+</html>

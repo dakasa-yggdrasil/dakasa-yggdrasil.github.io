@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Manifestos · Conceitos · Yggdrasil</title>
+<meta name="description" content="No Yggdrasil tudo é um manifesto versionado: o formato declarativo (kind + metadata + spec), os kinds suportados pelo core, como cada apply cria uma nova versão e o ciclo de vida apply / diff / get / describe / rollback / delete." />
+<link rel="icon" href="../assets/favicon-tree.png" type="image/png" />
+<meta name="theme-color" content="#0A0E0F" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Manifestos · Yggdrasil" />
+<meta property="og:description" content="O modelo declarativo do Yggdrasil: kind + metadata + spec, kinds suportados, versionamento e o ciclo de vida de um manifesto." />
+<meta property="og:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="concepts.css" />
+</head>
+<body>
+
+<!-- ░░ NAV ░░ -->
+<header class="nav is-scrolled" id="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="Yggdrasil — início">
+      <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
+      <span class="brand__name">Yggdrasil</span>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="../">Início</a>
+      <a href="../#integrations">Integrações</a>
+      <a href="../#surfaces">Surfaces</a>
+      <a href="../#cli">CLI</a>
+      <a href="index.html" aria-current="page">Conceitos</a>
+    </nav>
+    <div class="nav__cta">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub da organização">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a class="btn btn--solid btn--sm" href="../#start">Começar</a>
+    </div>
+    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="doc-shell">
+
+  <!-- ░░ SIDEBAR ░░ -->
+  <aside class="doc-side" id="docSide">
+    <button class="doc-side__toggle" aria-expanded="false">Manifestos</button>
+    <div class="doc-side__nav">
+      <div class="doc-side__inner">
+        <p class="doc-side__group">Fundamentos</p>
+        <a href="index.html">Visão geral &amp; arquitetura</a>
+        <a href="manifests.html" aria-current="page">Manifestos</a>
+        <a href="workflows.html">Workflows &amp; runs</a>
+        <a href="identity.html">Identidade &amp; colaboradores</a>
+        <p class="doc-side__group">Construindo</p>
+        <a href="integrations.html">Integrações</a>
+        <a href="surfaces.html">Surfaces</a>
+        <a href="cli.html">CLI</a>
+        <a href="self-hosting.html">Self-hosting &amp; primeiros passos</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ░░ ARTICLE ░░ -->
+  <article class="doc">
+    <p class="crumb"><a href="../">Início</a> / Conceitos / Manifestos</p>
+    <h1>Manifestos</h1>
+    <p class="doc__lede">No Yggdrasil <strong>tudo é um manifesto versionado</strong> — um workflow, um tipo de integração, uma instância implantada, um time, a forma do próprio control plane. Você descreve o estado desejado como um documento declarativo, aplica, e o core guarda cada versão com histórico, checksum e a possibilidade de voltar atrás. É GitOps de verdade para a operação da sua plataforma.</p>
+
+    <h2 id="o-que-e">O que é um manifesto</h2>
+    <p>Um manifesto é um documento YAML (ou JSON) com a mesma forma que você reconhece do Kubernetes — de propósito, porque é o padrão que a maioria dos times já domina. O envelope tem quatro partes:</p>
+    <div class="deflist">
+      <div class="deflist__row"><dt><code>apiVersion</code></dt><dd>A versão do <em>schema</em> do envelope. Hoje: <code>yggdrasil.io/v1alpha1</code>. O core aceita múltiplas <code>apiVersion</code>s durante janelas de depreciação.</dd></div>
+      <div class="deflist__row"><dt><code>kind</code></dt><dd>O tipo do recurso. Determina qual validador o core aplica ao <code>spec</code> (veja a lista abaixo). É normalizado para minúsculas antes de validar.</dd></div>
+      <div class="deflist__row"><dt><code>metadata</code></dt><dd><code>name</code> (obrigatório), <code>namespace</code> (default <code>global</code>), <code>description</code>, <code>labels</code> e <code>active</code>. A tripla <code>(kind, namespace, name)</code> é a identidade lógica do recurso ao longo de todas as suas versões.</dd></div>
+      <div class="deflist__row"><dt><code>spec</code></dt><dd>O corpo específico do <code>kind</code> (obrigatório). É a única parte cujo formato muda de um <code>kind</code> para outro.</dd></div>
+    </div>
+    <p>O modelo é <strong>declarativo</strong>: você não diz <em>como</em> chegar lá, diz <em>qual</em> é o estado desejado. O core reconcilia. Diferente do k8s, o Yggdrasil <strong>versiona toda escrita</strong> — cada <code>apply</code> com mudança gera uma nova versão, e o histórico fica consultável.</p>
+
+    <h2 id="os-kinds">Os kinds</h2>
+    <p>A lista autoritativa de <code>kind</code>s é o <code>switch</code> em <code>manifest/validate.go</code> no <code>yggdrasil-core</code>: cada <code>kind</code> aceito mapeia para uma função <code>Validate…Spec</code>. Estes são os tipos suportados hoje:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Kind</th><th>Para que serve</th></tr></thead>
+        <tbody>
+          <tr><td><code>integration_family</code></td><td>Contrato de interface (operações e schemas compartilhados) que muitos providers implementam.</td></tr>
+          <tr><td><code>integration_type</code></td><td>Implementação concreta de uma family (kubernetes, aws, github…), com seus reactors.</td></tr>
+          <tr><td><code>integration_instance</code></td><td>Configuração implantada de um type — credenciais, cluster, projeto.</td></tr>
+          <tr><td><code>integration_quickstart</code></td><td>Manifesto voltado ao adotante: "instale isto com um comando", com inputs e steps.</td></tr>
+          <tr><td><code>product</code></td><td>Conjunto de integrações/workflows entregue como uma unidade.</td></tr>
+          <tr><td><code>workflow</code></td><td>Pipeline passo-a-passo de operações através das integrações.</td></tr>
+          <tr><td><code>workflow_template</code></td><td>Blueprint de workflow parametrizado, instanciado sob demanda.</td></tr>
+          <tr><td><code>surface</code></td><td>Console/painel interno que renderiza recortes da plataforma.</td></tr>
+          <tr><td><code>rbac</code></td><td>Política de acesso sujeito-ação-recurso.</td></tr>
+          <tr><td><code>policy</code></td><td>Política de runtime com condições (rate limit, residência de dados…).</td></tr>
+          <tr><td><code>resource</code></td><td>Entidade rastreada, originada do <code>core</code> ou descoberta numa integração (um bucket S3, um canal).</td></tr>
+          <tr><td><code>repository_binding</code></td><td>Vínculo entre um repositório de origem e uma integração ou product.</td></tr>
+          <tr><td><code>guardian_policy</code> / <code>guardian_approval</code> / <code>guardian_memory</code></td><td>Fluxo de aprovação e o seu histórico.</td></tr>
+          <tr><td><code>remediation_bundle</code> / <code>remediation_contract</code></td><td>Peças do fluxo de resposta a incidentes.</td></tr>
+          <tr><td><code>control_plane</code></td><td>Declara a forma do deploy de produção (imagem, réplicas, Postgres, ingress, transportes).</td></tr>
+          <tr><td><code>tenant</code></td><td>Fronteira de tenancy para deploys multi-tenant.</td></tr>
+          <tr><td><code>ephemeral_environment</code></td><td>Definição de ambiente efêmero (preview / ambientes de PR).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Um <code>kind</code> fora dessa lista é rejeitado com <code>unsupported manifest kind</code> — o core nunca persiste algo que não saiba validar.</p>
+
+    <h2 id="versionamento">Versionamento</h2>
+    <p>Cada <code>apply</code> não sobrescreve nada: ele <strong>acrescenta uma versão</strong>. Ao receber um manifesto, o core:</p>
+    <ol>
+      <li><strong>Normaliza e valida o envelope.</strong> Exige <code>apiVersion</code>, <code>kind</code>, <code>metadata.name</code> e <code>spec</code> não-vazio; faz <code>trim</code>/lowercase e aplica o validador do <code>kind</code> ao <code>spec</code>. Falha aqui devolve <code>422</code> — nada é gravado.</li>
+      <li><strong>Calcula o número da nova versão</strong> como <code>MAX(version) + 1</code> dentro da tripla <code>(kind, namespace, name)</code>. A primeira aplicação de um recurso é a versão <code>1</code>.</li>
+      <li><strong>Promove a nova versão a ativa</strong> e desativa a anterior (<code>active = FALSE</code>) na mesma transação. Aplicar com <code>metadata.active: false</code> grava um "tombstone" sem deixar nenhuma versão ativa.</li>
+      <li><strong>Persiste um <code>checksum</code></strong> SHA-256 determinístico do documento normalizado, para que aplicar de novo um conteúdo idêntico seja detectável (o <code>diff</code> reporta "sem mudanças").</li>
+    </ol>
+    <p>Como toda versão antiga continua na tabela com seu <code>spec</code> intacto, o histórico é completo: você consulta qualquer versão por <code>(kind, namespace, name, version)</code> e nunca perde a forma anterior de um recurso.</p>
+
+    <h2 id="exemplo">Um manifesto na prática</h2>
+    <p>Um <code>integration_quickstart</code> mínimo — o manifesto que torna uma integração instalável com um comando. Note o envelope (<code>apiVersion</code> + <code>kind</code> + <code>metadata</code> + <code>spec</code>) e como o <code>spec</code> carrega os campos específicos do <code>kind</code>:</p>
+    <div class="codeblock">
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">slack-quickstart.yaml</span></div>
+      <pre><code><span class="t-key">apiVersion:</span> <span class="t-str">yggdrasil.io/v1alpha1</span>
+<span class="t-key">kind:</span> <span class="t-str">integration_quickstart</span>
+<span class="t-key">metadata:</span>
+  <span class="t-key">name:</span> <span class="t-str">slack</span>
+  <span class="t-key">namespace:</span> <span class="t-str">global</span>
+  <span class="t-key">description:</span> <span class="t-str">"Conecte um workspace do Slack em um comando"</span>
+  <span class="t-key">labels:</span>
+    <span class="t-key">team:</span> <span class="t-str">platform</span>
+<span class="t-key">spec:</span>
+  <span class="t-key">display_name:</span> <span class="t-str">Slack</span>
+  <span class="t-key">providers:</span>
+    <span class="t-com"># cada provider vira um "instale isto" no console</span>
+    - <span class="t-key">id:</span> <span class="t-str">slack-bot</span>
+      <span class="t-key">display_name:</span> <span class="t-str">Slack Bot</span>
+      <span class="t-key">requires:</span>
+        - <span class="t-key">kind:</span> <span class="t-str">integration_type</span>
+          <span class="t-key">name:</span> <span class="t-str">slack</span>
+      <span class="t-key">inputs:</span>
+        - <span class="t-key">id:</span> <span class="t-str">bot_token</span>
+          <span class="t-key">label:</span> <span class="t-str">Bot token</span>
+          <span class="t-key">type:</span> <span class="t-str">string</span>
+          <span class="t-key">required:</span> <span class="t-num">true</span>
+          <span class="t-key">sensitive:</span> <span class="t-num">true</span>
+      <span class="t-key">steps:</span>
+        - <span class="t-key">id:</span> <span class="t-str">create-instance</span>
+          <span class="t-key">uses:</span>
+            <span class="t-key">kind:</span> <span class="t-str">integration_instance</span>
+          <span class="t-key">with:</span>
+            <span class="t-key">token:</span> <span class="t-str">"{{ .inputs.bot_token }}"</span>
+</code></pre>
+    </div>
+
+    <h2 id="ciclo-de-vida">O ciclo de vida</h2>
+    <p>Você dirige tudo pela CLI, que é fina: ela só molda a chamada HTTP para o core, que é a autoridade. O fluxo do dia a dia:</p>
+    <div class="flow" role="img" aria-label="Ciclo de vida: diff, apply, get, describe, rollback, delete">
+      <div class="flow__node"><span class="flow__tag">prévia</span><strong>diff / apply --dry-run</strong><small>o que mudaria</small></div>
+      <div class="flow__arrow" aria-hidden="true">→</div>
+      <div class="flow__node flow__node--core"><span class="flow__tag">grava</span><strong>apply</strong><small>nova versão ativa</small></div>
+      <div class="flow__arrow" aria-hidden="true">→</div>
+      <div class="flow__node"><span class="flow__tag">lê</span><strong>get / describe</strong><small>lista · YAML</small></div>
+      <div class="flow__arrow" aria-hidden="true">→</div>
+      <div class="flow__node"><span class="flow__tag">desfaz</span><strong>rollback / delete</strong><small>--to · --soft</small></div>
+    </div>
+    <p>Cada subcomando mapeia para uma operação no core. Note que <code>rollback</code> não é um endpoint dedicado: como toda versão guarda seu <code>spec</code>, voltar atrás é simplesmente reaplicar o <code>spec</code> da versão alvo como uma nova versão — o histórico nunca recua.</p>
+    <div class="codeblock">
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">ciclo-de-vida</span></div>
+      <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> apply -f slack-quickstart.yaml --dry-run
+<span class="c-dim">~ integration_quickstart global/slack (dry-run, not applied)</span>
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> apply -f slack-quickstart.yaml
+<span class="c-ok">created</span> integration_quickstart global/slack (version <span class="c-str">1</span>)
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> get integration_quickstart -n global
+<span class="c-dim">KIND                     NAMESPACE  NAME   VERSION  ACTIVE</span>
+integration_quickstart   global     slack  <span class="c-str">1</span>        true
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> describe integration_quickstart slack -n global   <span class="c-dim"># imprime o manifesto em YAML</span>
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> rollback integration_quickstart slack --to <span class="c-str">1</span> --yes
+<span class="c-ok">✓</span> rolled back integration_quickstart global/slack to the contents of v<span class="c-str">1</span> (new version <span class="c-str">3</span>)
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> delete integration_quickstart slack --soft   <span class="c-y"># mantém o histórico, active=false</span>
+</code></pre>
+    </div>
+    <p>Flags reais que vale conhecer:</p>
+    <div class="deflist">
+      <div class="deflist__row"><dt><code>apply -f &lt;arquivo&gt; --dry-run</code></dt><dd>Mostra o diff contra a versão ativa sem gravar. <code>-f -</code> lê do stdin; vários documentos separados por <code>---</code> num arquivo só.</dd></div>
+      <div class="deflist__row"><dt><code>diff -f &lt;arquivo&gt;</code></dt><dd>Compara o arquivo com o estado armazenado, sem aplicar.</dd></div>
+      <div class="deflist__row"><dt><code>get [&lt;kind&gt;] -n &lt;ns&gt; -o table|yaml|json --active-only</code></dt><dd>Lista ou busca manifestos. <code>--active-only</code> filtra só os ativos.</dd></div>
+      <div class="deflist__row"><dt><code>describe &lt;kind&gt; &lt;name&gt; -n &lt;ns&gt;</code></dt><dd>Imprime um manifesto como YAML.</dd></div>
+      <div class="deflist__row"><dt><code>rollback &lt;kind&gt; &lt;name&gt; --to &lt;versão&gt; -n &lt;ns&gt; --yes</code></dt><dd>Reaplica o <code>spec</code> da versão indicada como uma versão nova. <code>--yes</code> pula a confirmação.</dd></div>
+      <div class="deflist__row"><dt><code>delete &lt;kind&gt; &lt;name&gt; [--soft] -n &lt;ns&gt; --yes</code></dt><dd><code>--soft</code> vira <code>active=false</code> em todas as versões, preservando o histórico; sem ele o delete é <em>hard</em> (remove todas as versões da identidade lógica), espelhando o default do core.</dd></div>
+    </div>
+
+    <div class="callout callout--tip">Manifestos são o <em>quê</em>; a execução é o <em>como</em>. Veja <a href="workflows.html">Workflows &amp; runs</a> para como um manifesto <code>workflow</code> vira execução, e <a href="integrations.html">Integrações</a> para o modelo de quatro camadas (family → type → instance → provider).</div>
+
+    <div class="callout callout--note">O código é a fonte da verdade: a lista de kinds e as regras de versionamento vêm de <code>manifest/validate.go</code>, <code>repository/manifest.go</code> e <code>model/manifest.go</code> no <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>.</div>
+
+    <nav class="doc-nav" aria-label="Navegação entre conceitos">
+      <a href="index.html"><span>← Anterior</span><strong>Visão geral</strong></a>
+      <a class="is-next" href="workflows.html"><span>Próximo →</span><strong>Workflows &amp; runs</strong></a>
+    </nav>
+  </article>
+</div>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <a class="brand" href="../">
+        <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
+        <span class="brand__name">Yggdrasil</span>
+      </a>
+      <p class="footer__tag">A árvore-mundo que conecta seus sistemas.<br />Open source · Apache-2.0.</p>
+    </div>
+    <nav class="footer__col" aria-label="Conceitos">
+      <h5>Conceitos</h5>
+      <a href="index.html">Visão geral</a>
+      <a href="manifests.html">Manifestos</a>
+      <a href="integrations.html">Integrações</a>
+      <a href="surfaces.html">Surfaces</a>
+    </nav>
+    <nav class="footer__col" aria-label="Repositórios">
+      <h5>Código</h5>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">CLI</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">SDK (Go)</a>
+      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Template de integração</a>
+    </nav>
+    <nav class="footer__col" aria-label="Organização">
+      <h5>Org</h5>
+      <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">Licença</a>
+    </nav>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>© 2026 DaKasa · Yggdrasil</span>
+    <span>Feito para rodar na sua infra.</span>
+  </div>
+</footer>
+
+<script src="../main.js" defer></script>
+</body>
+</html>

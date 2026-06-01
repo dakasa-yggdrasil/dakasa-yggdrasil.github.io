@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CLI · Conceitos · Yggdrasil</title>
+<meta name="description" content="A CLI yggdrasil: um único binário que dirige o ciclo de vida inteiro do control plane — bootstrap, manifestos, runs, deploy e catálogo — falando com a API do core, sem reimplementar lógica." />
+<link rel="icon" href="../assets/favicon-tree.png" type="image/png" />
+<meta name="theme-color" content="#0A0E0F" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="CLI · Yggdrasil" />
+<meta property="og:description" content="Um binário para o ciclo de vida inteiro do Yggdrasil: scriptável, versionável e auditável, sempre falando com a API do yggdrasil-core." />
+<meta property="og:image" content="https://dakasa-yggdrasil.github.io/assets/og.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="concepts.css" />
+</head>
+<body>
+
+<!-- ░░ NAV ░░ -->
+<header class="nav is-scrolled" id="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="../" aria-label="Yggdrasil — início">
+      <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
+      <span class="brand__name">Yggdrasil</span>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="../">Início</a>
+      <a href="../#integrations">Integrações</a>
+      <a href="../#surfaces">Surfaces</a>
+      <a href="../#cli">CLI</a>
+      <a href="index.html" aria-current="page">Conceitos</a>
+    </nav>
+    <div class="nav__cta">
+      <a class="btn btn--ghost btn--sm" href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener" aria-label="GitHub da organização">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+      <a class="btn btn--solid btn--sm" href="../#start">Começar</a>
+    </div>
+    <button class="nav__burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="doc-shell">
+
+  <!-- ░░ SIDEBAR ░░ -->
+  <aside class="doc-side" id="docSide">
+    <button class="doc-side__toggle" aria-expanded="false">CLI</button>
+    <div class="doc-side__nav">
+      <div class="doc-side__inner">
+        <p class="doc-side__group">Fundamentos</p>
+        <a href="index.html">Visão geral &amp; arquitetura</a>
+        <a href="manifests.html">Manifestos</a>
+        <a href="workflows.html">Workflows &amp; runs</a>
+        <a href="identity.html">Identidade &amp; colaboradores</a>
+        <p class="doc-side__group">Construindo</p>
+        <a href="integrations.html">Integrações</a>
+        <a href="surfaces.html">Surfaces</a>
+        <a href="cli.html" aria-current="page">CLI</a>
+        <a href="self-hosting.html">Self-hosting &amp; primeiros passos</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ░░ ARTICLE ░░ -->
+  <article class="doc">
+    <p class="crumb"><a href="../">Início</a> / Conceitos / CLI</p>
+    <h1>CLI</h1>
+    <p class="doc__lede">Um único binário — <code>yggdrasil</code> — dirige o ciclo de vida inteiro do control plane: bootstrap, manifestos, runs, deploy, catálogo e colaboradores. Ele <strong>não reimplementa lógica de negócio</strong>: cada subcomando molda uma chamada HTTP para a API do <code>yggdrasil-core</code>, que é a autoridade sobre schema, versões e execução.</p>
+
+    <h2 id="filosofia">Filosofia</h2>
+    <p>A CLI é deliberadamente fina. O servidor valida o manifesto, escreve a versão, despacha o workflow e aplica auth; a CLI só lê o arquivo, faz o POST e imprime a resposta. Isso a torna <strong>scriptável</strong> (qualquer comando roda em CI sem TUI, via flags), <strong>versionável</strong> (você guarda manifestos YAML no git e os aplica com <code>apply</code>) e <strong>auditável</strong> (toda ação vira uma chamada de API registrada no core).</p>
+    <p>Quase todo comando precisa de um <strong>contexto ativo</strong>: um <code>yggdrasil-core</code> para conversar. O contexto mora em <code>~/.yggdrasil/config.yaml</code> — server, token e colaborador — no estilo <code>kubectl</code>. Você cria um com <code>init</code> ou <code>login</code>, troca com <code>config use-context</code>, e qualquer comando aceita <code>--server</code>/<code>--token</code> para sobrepor o contexto pontualmente.</p>
+    <div class="callout callout--note">Os comandos de <em>workspace dev</em> (<code>integrations</code>, <code>surfaces</code>) são a exceção: eles não falam com o core, e sim manipulam o checkout do monorepo. Todos os demais só precisam de um core acessível.</div>
+
+    <h2 id="referencia">Referência de comandos</h2>
+    <p>Os subcomandos se organizam pelo ciclo de vida da plataforma — do primeiro <code>init</code> até a construção dos seus próprios plugins.</p>
+
+    <h3>Bootstrap &amp; contexto</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Comando</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>init [--dir &lt;path&gt;]</code></td><td>Bootstrap standalone em um comando: sobe Postgres, core e adapters via docker-compose. Com <code>--server &lt;url&gt;</code> apenas conecta a um <code>yggdrasil-core</code> já existente.</td></tr>
+        <tr><td><code>login --server &lt;url&gt; --username &lt;slug&gt;</code></td><td>Troca credenciais por um token de sessão e salva um contexto. Para contas com MFA, passe <code>--totp &lt;código&gt;</code> ou <code>--recovery-code &lt;código&gt;</code> (em terminal interativo o código é pedido sozinho).</td></tr>
+        <tr><td><code>status</code></td><td>Mostra o contexto ativo, o server alvo e um health-check (<code>healthz</code>/<code>readyz</code>) do core.</td></tr>
+        <tr><td><code>version</code></td><td>Imprime a versão da CLI (e o hash de build, quando disponível).</td></tr>
+        <tr><td><code>update</code></td><td>Baixa e instala a release mais recente para o seu SO/arquitetura, verificando o checksum. <code>--check</code> só reporta.</td></tr>
+        <tr><td><code>config use-context &lt;name&gt;</code></td><td>Troca o contexto de server ativo. A família <code>config</code> também tem <code>get-contexts</code>, <code>current-context</code>, <code>set-context</code>, <code>delete-context</code> e <code>view</code>.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Manifestos</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Comando</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>apply -f &lt;file&gt; [--dry-run]</code></td><td>Cria uma nova versão do manifesto a partir de um arquivo (vários documentos separados por <code>---</code> são suportados; <code>-f -</code> lê do stdin). Com <code>--dry-run</code> mostra o diff contra a versão ativa sem aplicar.</td></tr>
+        <tr><td><code>get &lt;kind&gt; [&lt;name&gt;]</code></td><td>Lista todos os manifestos de um kind, ou busca um pelo nome. <code>-o table|yaml|json</code> escolhe o formato; <code>-n</code> escopa por namespace.</td></tr>
+        <tr><td><code>describe &lt;kind&gt; &lt;name&gt;</code></td><td>Imprime um manifesto como YAML — atalho conveniente sobre o <code>get … -o yaml</code>.</td></tr>
+        <tr><td><code>diff -f &lt;file&gt;</code></td><td>Compara, no cliente, os manifestos do arquivo contra as versões ativas no server, linha a linha.</td></tr>
+        <tr><td><code>delete &lt;kind&gt; &lt;name&gt; [--soft]</code></td><td>Remove um manifesto (hard por padrão, pedindo confirmação). <code>--soft</code> apenas vira <code>active=false</code> e preserva o histórico.</td></tr>
+        <tr><td><code>rollback &lt;kind&gt; &lt;name&gt; --to &lt;ver&gt;</code></td><td>Re-aplica o conteúdo de uma versão antiga como uma versão nova — o histórico fica intacto, então dá pra avançar de novo depois.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Runs</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Comando</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>run &lt;workflow&gt; [--input k=v] [--async]</code></td><td>Dispara uma execução de workflow pelo nome. Síncrono por padrão (imprime o progresso passo a passo); <code>--input k=v</code> é repetível; <code>--async</code> devolve um run id na hora.</td></tr>
+        <tr><td><code>ops list | get | retry | abort | replay</code></td><td>O lado operacional dos runs: <code>ops list</code> filtra e lista, <code>ops get &lt;run-id&gt;</code> inspeciona um run, e <code>retry</code>/<code>abort</code>/<code>replay &lt;run-id&gt;</code> gerenciam runs em andamento ou finalizados.</td></tr>
+        <tr><td><code>logs &lt;run-id&gt;</code></td><td>Acompanha um run em tempo real, imprimindo as transições de status de cada passo até o estado terminal.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Control plane</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Comando</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>deploy control-plane -f cp.yaml</code></td><td>Aplica um manifesto <code>control_plane</code> e, em seguida, dispara o workflow de deploy contra ele — açúcar sobre <code>apply</code> + <code>run</code> com os defaults da topologia de bootstrap. <code>--no-run</code> aplica sem executar.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Colaboradores</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Comando</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>collaborator &lt;verbo&gt; [opts]</code></td><td>Gerencia o ciclo de vida da força de trabalho. Verbos de ciclo: <code>create</code>, <code>get</code>, <code>list</code>, <code>update</code>, <code>offboard</code>, <code>suspend</code>, <code>unsuspend</code>, <code>re-onboard</code>. Mudanças de campo: <code>role-change</code>, <code>team-add</code>, <code>team-remove</code>, <code>attribute-set</code>, <code>manager-change</code>. Ausências: <code>absence-start</code>, <code>absence-end</code>. Auditoria: <code>lifecycle-events</code>, <code>provider-state</code>.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Auth</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Comando</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>auth provider list</code></td><td>Lista os provedores OAuth/OIDC configurados (nome, tipo, status).</td></tr>
+        <tr><td><code>auth provider apply -f &lt;file&gt;</code></td><td>Registra ou atualiza um provedor a partir de YAML/JSON, e imprime a URL de login para verificar na hora. Também há <code>auth provider get</code> e <code>delete</code>.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Catálogo</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Comando</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>install &lt;repo_ref&gt;</code></td><td>Instalação quickstart de uma integração em um <code>yggdrasil-core</code> remoto: busca o <code>yggdrasil-quickstart.yaml</code> do repo, guia pelos inputs declarados (TUI por padrão, <code>--non-interactive</code> para CI) e despacha. Aceita refs de GitHub (<code>owner/repo[@ref][:path]</code>) e de OCI (<code>oci://…</code>); <code>--dry-run</code> compila sem despachar.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Construir</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Comando</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>new integration &lt;name&gt; --owner &lt;org&gt;</code></td><td>Faz o scaffold de um novo adapter de integração a partir do template oficial, reescrevendo os caminhos de módulo. O template compila de cara (<code>go test ./...</code>).</td></tr>
+        <tr><td><code>new surface &lt;name&gt; --owner &lt;org&gt;</code></td><td>Faz o scaffold de uma nova surface (UI / edge). Flags compartilhadas: <code>--module</code>, <code>--dir</code>, <code>--template</code>, <code>--no-git-init</code>.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Dev de workspace</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Comando</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><td><code>integrations &lt;subcomando&gt;</code></td><td>Helper para contribuidores que trabalham no monorepo: <code>list</code>, <code>install</code>, <code>remove</code>, <code>installed</code> e uma <code>tui</code>. Opera sobre o checkout local, não sobre um core remoto.</td></tr>
+        <tr><td><code>surfaces &lt;subcomando&gt;</code></td><td>Helper irmão para surfaces no workspace: <code>list</code>, <code>active</code>, <code>install</code>, <code>remove</code>, <code>installed</code>, <code>scaffold</code>, <code>activate</code>, <code>deactivate</code>.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 id="auto-update">Auto-update</h2>
+    <p>A CLI se mantém em dia sozinha. Depois de cada comando, ela checa o GitHub no máximo uma vez por intervalo (cacheando o resultado no config) e, se o binário estiver atrás, imprime uma dica discreta no stderr sugerindo <code>yggdrasil update</code>. O <code>update</code> baixa o artefato da release mais recente para o seu SO/arquitetura, confere o checksum contra o <code>checksums.txt</code> da release e troca o executável em uso de forma atômica. Builds de desenvolvimento nunca se sobrescrevem por engano — apenas reportam qual é a última release.</p>
+
+    <h2 id="sessao">Uma sessão típica</h2>
+    <p>Login com MFA, prévia do diff antes de aplicar, dispatch do workflow e inspeção do run:</p>
+    <div class="codeblock">
+      <div class="codeblock__bar"><span class="dot dot--r"></span><span class="dot dot--y"></span><span class="dot dot--g"></span><span class="terminal__title">terminal</span></div>
+      <pre><code><span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> login --server <span class="c-str">https://ygg.acme.internal</span> --username <span class="c-str">gio</span> --totp <span class="c-str">481920</span>
+<span class="c-ok">✓</span> logged in as gio <span class="c-dim">→ context "ygg-acme-internal" saved to ~/.yggdrasil/config.yaml</span>
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> apply -f workflows/nightly-sync.yaml --dry-run
+<span class="c-y">~</span> workflow global/nightly-sync (dry-run, not applied)
+ <span class="c-dim">  schedule: "0 3 * * *"</span>
+<span class="c-ok">+</span><span class="c-dim">  retries: 3</span>
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> apply -f workflows/nightly-sync.yaml
+<span class="c-dim">created workflow global/nightly-sync (version 7)</span>
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> run nightly-sync --input <span class="c-str">target=staging</span> --async
+<span class="c-ok">✓</span> dispatched global/nightly-sync <span class="c-dim">(run r-2f9c, status running)</span>
+  <span class="c-dim">follow: yggdrasil logs r-2f9c   |   yggdrasil ops get r-2f9c</span>
+
+<span class="c-prompt">$</span> <span class="c-cmd">yggdrasil</span> ops get <span class="c-str">r-2f9c</span>
+<span class="c-dim">run_id: r-2f9c</span>
+<span class="c-dim">status: succeeded</span>
+<span class="c-dim">workflow: nightly-sync</span></code></pre>
+    </div>
+
+    <div class="callout callout--tip">Sem nenhum contexto ainda? Comece por <a href="self-hosting.html">Self-hosting &amp; primeiros passos</a>: um <code>yggdrasil init</code> sobe o core e já grava seu primeiro contexto — depois é só <code>status</code>, <code>apply</code> e <code>run</code>.</div>
+
+    <nav class="doc-nav" aria-label="Navegação entre conceitos">
+      <a href="surfaces.html"><span>← Anterior</span><strong>Surfaces</strong></a>
+      <a class="is-next" href="self-hosting.html"><span>Próximo →</span><strong>Self-hosting &amp; primeiros passos</strong></a>
+    </nav>
+  </article>
+</div>
+
+<!-- ░░ FOOTER ░░ -->
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <a class="brand" href="../">
+        <img class="brand__mark" src="../assets/yggdrasil-mark.png" alt="" aria-hidden="true" />
+        <span class="brand__name">Yggdrasil</span>
+      </a>
+      <p class="footer__tag">A árvore-mundo que conecta seus sistemas.<br />Open source · Apache-2.0.</p>
+    </div>
+    <nav class="footer__col" aria-label="Conceitos">
+      <h5>Conceitos</h5>
+      <a href="index.html">Visão geral</a>
+      <a href="manifests.html">Manifestos</a>
+      <a href="integrations.html">Integrações</a>
+      <a href="surfaces.html">Surfaces</a>
+    </nav>
+    <nav class="footer__col" aria-label="Repositórios">
+      <h5>Código</h5>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil" target="_blank" rel="noopener">CLI</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-core" target="_blank" rel="noopener">yggdrasil-core</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil-sdk-go" target="_blank" rel="noopener">SDK (Go)</a>
+      <a href="https://github.com/dakasa-yggdrasil/integration-template" target="_blank" rel="noopener">Template de integração</a>
+    </nav>
+    <nav class="footer__col" aria-label="Organização">
+      <h5>Org</h5>
+      <a href="https://github.com/dakasa-yggdrasil" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/dakasa-yggdrasil/yggdrasil/blob/main/LICENSE" target="_blank" rel="noopener">Licença</a>
+    </nav>
+  </div>
+  <div class="wrap footer__bottom">
+    <span>© 2026 DaKasa · Yggdrasil</span>
+    <span>Feito para rodar na sua infra.</span>
+  </div>
+</footer>
+
+<script src="../main.js" defer></script>
+</body>
+</html>
