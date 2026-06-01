@@ -88,7 +88,7 @@
     function lerp(a, b, t) { return a + (b - a) * t; }
     function rgba(c, a) { return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")"; }
     function mix(c1, c2, t) { return [lerp(c1[0], c2[0], t) | 0, lerp(c1[1], c2[1], t) | 0, lerp(c1[2], c2[2], t) | 0]; }
-    function bez(A, e, B, t) { var u = 1 - t; return [u * u * A.x + 2 * u * t * e.cx + t * t * B.x, u * u * A.y + 2 * u * t * e.cy + t * t * B.y]; }
+    function bez(A, e, B, t) { return [A.x + (B.x - A.x) * t, A.y + (B.y - A.y) * t]; }
 
     function addNode(x, y, depth) { nodes.push({ bx: x, by: y, x: x, y: y, depth: depth, heat: 0, ph: Math.random() * 6.2832, out: [] }); return nodes.length - 1; }
     function addEdge(a, b) {
@@ -169,40 +169,59 @@
       var rg = ctx.createRadialGradient(W * 0.5, H * 1.0, 0, W * 0.5, H * 1.0, H * 0.55);
       rg.addColorStop(0, rgba(TEAL, 0.09)); rg.addColorStop(0.6, rgba(TEAL, 0.03)); rg.addColorStop(1, rgba(TEAL, 0));
       ctx.fillStyle = rg; ctx.fillRect(0, H * 0.42, W, H * 0.58);
-      var i, n, e, A, B;
+      var i, k, n, e, A, B;
 
-      // breathing + heat decay + pointer heat
+      // gentle breathing
       for (i = 0; i < nodes.length; i++) {
         n = nodes[i];
         var amp = n.depth > 1 ? Math.min(7, n.depth * 1.5) : 0;
         n.x = n.bx + Math.sin(ts * 0.0006 + n.ph) * amp;
         n.y = n.by + Math.cos(ts * 0.00052 + n.ph) * amp * 0.55;
-        n.heat *= 0.92;
-        if (ptr.on) { var dx = n.x - ptr.x, dy = n.y - ptr.y, d2 = dx * dx + dy * dy; if (d2 < R2) { var hh = 1 - Math.sqrt(d2) / R; if (hh > n.heat) n.heat = hh; } }
       }
-      for (i = 0; i < edges.length; i++) edges[i].heat *= 0.9;
-
-      // advance flowing light
+      // straight limbs: just the midpoint (for light sampling)
+      for (i = 0; i < edges.length; i++) {
+        e = edges[i]; A = nodes[e.a]; B = nodes[e.b];
+        e.mx = (A.x + B.x) * 0.5; e.my = (A.y + B.y) * 0.5;
+      }
+      // advance the travelling light; each head is a MOVING POINT LIGHT
+      var src = [];
       for (i = pulses.length - 1; i >= 0; i--) {
-        var pl = pulses[i]; pl.t += pl.sp;
-        e = edges[pl.e]; if (e) { e.heat = 1; if (nodes[e.b].heat < 0.85) nodes[e.b].heat = 0.85; }
-        if (pl.t >= 1) { var nx = nodes[edges[pl.e].b]; if (nx.out.length) { pl.e = nx.out[(Math.random() * nx.out.length) | 0]; pl.t = 0; } else pulses.splice(i, 1); }
+        var pl = pulses[i]; pl.t += pl.sp; e = edges[pl.e];
+        if (pl.t >= 1) {
+          var nb = nodes[e.b];
+          if (nb.out.length) { pl.e = nb.out[(Math.random() * nb.out.length) | 0]; pl.t = 0; e = edges[pl.e]; }
+          else { pulses.splice(i, 1); continue; }
+        }
+        var hh = bez(nodes[e.a], e, nodes[e.b], pl.t);
+        pl.hx = hh[0]; pl.hy = hh[1];
+        src.push({ x: hh[0], y: hh[1], r: 100 });
       }
       if (pulses.length < 13 && Math.random() < 0.11) spawn(0, Math.random() < 0.5 ? TEAL : AQUA);
+      if (ptr.on) src.push({ x: ptr.x, y: ptr.y, r: 160 });
 
-      // limbs (curved) + control points
+      // light intensity at a point = nearest source falloff (inverse-distance, clamped)
+      function lightAt(x, y) {
+        var m = 0;
+        for (var s = 0; s < src.length; s++) {
+          var o = src[s], dx = x - o.x, dy = y - o.y, d2 = dx * dx + dy * dy;
+          if (d2 < o.r * o.r) { var v = 1 - Math.sqrt(d2) / o.r; if (v > m) m = v; }
+        }
+        return m;
+      }
+
+      // each node lit by how close the moving light is (its own limb AND neighbours), with a short afterglow
+      for (i = 0; i < nodes.length; i++) { n = nodes[i]; var L = lightAt(n.x, n.y), dec = n.heat * 0.86; n.heat = dec > L ? dec : L; }
+
+      // limbs — brightness from the light that actually reaches the limb, not an on/off per branch
       ctx.lineCap = "round";
       for (i = 0; i < edges.length; i++) {
         e = edges[i]; A = nodes[e.a]; B = nodes[e.b];
-        var mx = (A.x + B.x) * 0.5, my = (A.y + B.y) * 0.5, ex = B.x - A.x, ey = B.y - A.y, len = Math.sqrt(ex * ex + ey * ey) || 1;
-        e.cx = mx + (-ey / len) * len * e.bow; e.cy = my + (ex / len) * len * e.bow;
-        var h = e.heat > (A.heat + B.heat) * 0.5 ? e.heat : (A.heat + B.heat) * 0.5;
-        ctx.strokeStyle = rgba(mix(TEAL, LIGHT, h), 0.065 + h * 0.6);
-        ctx.lineWidth = 0.7 + h * 1.8;
-        ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.quadraticCurveTo(e.cx, e.cy, B.x, B.y); ctx.stroke();
+        var em = lightAt(e.mx, e.my), na = (A.heat + B.heat) * 0.5, h = em > na ? em : na;
+        ctx.strokeStyle = rgba(mix(TEAL, LIGHT, h), 0.06 + h * 0.62);
+        ctx.lineWidth = 0.7 + h * 1.9;
+        ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
       }
-
-      // nodes (tips + heated junctions glow softly)
+      // nodes glow softly by their own light level
       for (i = 1; i < nodes.length; i++) {
         n = nodes[i]; var tip = n.out.length === 0, nh = n.heat;
         if (nh > 0.18) { ctx.shadowBlur = 12 * nh; ctx.shadowColor = rgba(TEAL, 0.8 * nh); } else ctx.shadowBlur = 0;
@@ -213,42 +232,41 @@
       }
       ctx.shadowBlur = 0;
 
-      // flowing light — comet heads with gradient tails
+      // the light itself: comet head + gradient tail along its limb + an ambient spill halo
       for (i = 0; i < pulses.length; i++) {
         var p = pulses[i]; e = edges[p.e]; if (!e) continue; A = nodes[e.a]; B = nodes[e.b];
         var t1 = p.t, t0 = t1 - 0.42; if (t0 < 0) t0 = 0;
-        for (var k = 0; k < 7; k++) {
+        for (k = 0; k < 7; k++) {
           var pa = bez(A, e, B, lerp(t0, t1, k / 7)), pb = bez(A, e, B, lerp(t0, t1, (k + 1) / 7)), aa = k / 7;
-          ctx.strokeStyle = rgba(p.col, aa * aa * 0.55); ctx.lineWidth = 0.5 + aa * 2;
+          ctx.strokeStyle = rgba(p.col, aa * aa * 0.5); ctx.lineWidth = 0.5 + aa * 2;
           ctx.beginPath(); ctx.moveTo(pa[0], pa[1]); ctx.lineTo(pb[0], pb[1]); ctx.stroke();
         }
-        var hd = bez(A, e, B, t1);
+        var hx = p.hx, hy = p.hy;
+        if (hx === undefined) { var h0 = bez(A, e, B, t1); hx = h0[0]; hy = h0[1]; }
+        var sg = ctx.createRadialGradient(hx, hy, 0, hx, hy, 66);
+        sg.addColorStop(0, rgba(p.col, 0.11)); sg.addColorStop(1, rgba(p.col, 0));
+        ctx.fillStyle = sg; ctx.fillRect(hx - 66, hy - 66, 132, 132);
         ctx.shadowBlur = 20; ctx.shadowColor = rgba(p.col, 1);
         ctx.fillStyle = rgba(LIGHT, 0.98);
-        ctx.beginPath(); ctx.arc(hd[0], hd[1], 2.3, 0, 6.2832); ctx.fill();
+        ctx.beginPath(); ctx.arc(hx, hy, 2.3, 0, 6.2832); ctx.fill();
         ctx.shadowBlur = 0;
       }
 
       // pointer halo
       if (ptr.on) {
-        var gg = ctx.createRadialGradient(ptr.x, ptr.y, 0, ptr.x, ptr.y, 130);
-        gg.addColorStop(0, rgba(TEAL, 0.12)); gg.addColorStop(1, rgba(TEAL, 0));
-        ctx.fillStyle = gg; ctx.fillRect(ptr.x - 130, ptr.y - 130, 260, 260);
+        var gg = ctx.createRadialGradient(ptr.x, ptr.y, 0, ptr.x, ptr.y, 140);
+        gg.addColorStop(0, rgba(TEAL, 0.1)); gg.addColorStop(1, rgba(TEAL, 0));
+        ctx.fillStyle = gg; ctx.fillRect(ptr.x - 140, ptr.y - 140, 280, 280);
       }
     }
 
     function drawStatic() {
       size(); build();
-      for (var i = 0; i < edges.length; i++) {
-        var e = edges[i], A = nodes[e.a], B = nodes[e.b];
-        var mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2, ex = B.x - A.x, ey = B.y - A.y, len = Math.sqrt(ex * ex + ey * ey) || 1;
-        e.cx = mx + (-ey / len) * len * e.bow; e.cy = my + (ex / len) * len * e.bow;
-      }
       ctx.clearRect(0, 0, W, H); aurora(0); ctx.lineCap = "round";
-      for (i = 0; i < edges.length; i++) {
-        var e2 = edges[i], a = nodes[e2.a], b = nodes[e2.b];
+      for (var i = 0; i < edges.length; i++) {
+        var a = nodes[edges[i].a], b = nodes[edges[i].b];
         ctx.strokeStyle = rgba(TEAL, 0.17); ctx.lineWidth = 0.9;
-        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.quadraticCurveTo(e2.cx, e2.cy, b.x, b.y); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       }
       for (i = 1; i < nodes.length; i++) { var tip = nodes[i].out.length === 0; ctx.fillStyle = rgba(TEAL, tip ? 0.5 : 0.3); ctx.beginPath(); ctx.arc(nodes[i].x, nodes[i].y, tip ? 1.5 : 1, 0, 6.2832); ctx.fill(); }
     }
