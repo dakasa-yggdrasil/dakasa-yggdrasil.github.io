@@ -86,8 +86,9 @@ code, pre { font-family: var(--font-mono); }
 }
 .nav.is-scrolled { background: rgba(10,14,15,.82); border-bottom-color: var(--border); }
 .nav__inner { display: flex; align-items: center; gap: 24px; height: 64px; }
-.brand { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-head); font-weight: 600; font-size: 18px; }
-.brand__mark { flex: none; }
+.brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-head); font-weight: 600; font-size: 18px; }
+.brand__mark { flex: none; height: 30px; width: auto; display: block; }
+.footer .brand__mark { height: 26px; }
 .nav__links { display: flex; gap: 26px; margin-left: 12px; flex: 1; }
 .nav__links a { color: var(--text-dim); font-size: 14.5px; transition: color .2s; }
 .nav__links a:hover { color: var(--text); }
